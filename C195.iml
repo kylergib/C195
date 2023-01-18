@@ -20,6 +20,7 @@
         <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-j-8.0.32" level="project" />
+    <orderEntry type="library" scope="TEST" name="mysql-connector-j-8.0.32" level="project" />
+    <orderEntry type="library" name="mysql-connector-java-8.0.25" level="project" />
   </component>
 </module>
