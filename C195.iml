@@ -8,32 +8,16 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module-library">
-      <library name="javafx-fxml">
-        <CLASSES>
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17/javafx-fxml-17.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-fxml/17/javafx-fxml-17-win.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17/javafx-controls-17.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-controls/17/javafx-controls-17-win.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17/javafx-graphics-17.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-graphics/17/javafx-graphics-17-win.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17/javafx-base-17.jar!/" />
-          <root url="jar://$MAVEN_REPOSITORY$/org/openjfx/javafx-base/17/javafx-base-17-win.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
       <library>
         <CLASSES>
           <root url="file://$PATH_TO_FX$" />
         </CLASSES>
         <JAVADOC />
-        <SOURCES>
+        <NATIVE>
           <root url="file://$PATH_TO_FX$" />
-        </SOURCES>
+        </NATIVE>
+        <SOURCES />
         <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
-        <jarDirectory url="file://$PATH_TO_FX$" recursive="false" type="SOURCES" />
       </library>
     </orderEntry>
   </component>
