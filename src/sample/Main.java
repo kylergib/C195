@@ -5,7 +5,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import sample.DAO.DBConnection;
+import sample.Utilities.DBConnection;
+import sample.Utilities.Query;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
@@ -21,6 +22,31 @@ public class Main extends Application {
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
         DBConnection.openConnection();
+        //--------
+        //testing sql statements
+        //ALL WORK SO FAR
+//        int rowsAffected = Query.insert(1, "Cherries");
+//        System.out.println(rowsAffected);
+
+//        int rowsAffected = Query.update(7, "Red Peppers");
+//        System.out.println(rowsAffected);
+//        int rowsAffected = Query.delete(8);
+//        System.out.println(rowsAffected);
+//        Query.delete(9);
+
+//        Query.select();
+//        System.out.println();
+//        Query.select(3);
+        //--------
+
+
+
+
+
+
+
+
+
 
         DBConnection.closeConnection();
 

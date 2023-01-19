@@ -1,4 +1,4 @@
-package sample.DAO;
+package sample.Utilities;
 
 public class UserDaoImpl {
 }
