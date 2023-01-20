@@ -6,14 +6,15 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 import sample.Utilities.DBConnection;
-import sample.Utilities.Query;
+import sample.Utilities.UserQuery;
+import sample.model.User;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
 
 public class Main extends Application {
     public static ResourceBundle rb = ResourceBundle.getBundle("sample/Lang",Locale.getDefault());
-
+    public static User myUser;
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -48,7 +49,7 @@ public class Main extends Application {
 
 
 
-        DBConnection.closeConnection();
+//        DBConnection.closeConnection();
 
     }
 

@@ -4,7 +4,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-public abstract class Query {
+public abstract class Querycopy {
 
     public static int insert(int colorID,String fruitName) throws SQLException {
         //works
