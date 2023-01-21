@@ -26,13 +26,20 @@ public class CustomerQuery {
             System.out.println("4");
             String phone = rs.getString("Phone");
             int divisionId = rs.getInt("Division_ID");
+//            int countryId = rs.getInt("Country_ID");
+            String divisionString = DivisionQuery.getDivisionName(divisionId);
+            int countryId = DivisionQuery.getCountryId(divisionId);
+            String countryString = CountryQuery.getCountryName(countryId);
+            System.out.println(divisionString + " " + countryString);
+            String newAddress = address + ", " + divisionString + ", " + countryString;
 
 
 
 
 
-            Customer newCustomer = new Customer(id,customerName,address,
-                    postalCode,phone,divisionId);
+
+            Customer newCustomer = new Customer(id,customerName,newAddress,
+                    postalCode,phone);
             allCustomers.add(newCustomer);
         }
         return allCustomers;

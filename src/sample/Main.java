@@ -23,7 +23,7 @@ public class Main extends Application {
         DBConnection.openConnection();
         System.out.println(CountryQuery.getCountryName(3));
         System.out.println(CountryQuery.getCountryId("U.S"));
-        System.out.println(DivisionQuery.getDivisionName(4,1));
+        System.out.println(DivisionQuery.getDivisionName(4));
         System.out.println(DivisionQuery.getDivisionId("Colorado"));
         System.out.println(DivisionQuery.getCountryId("Yukon"));
         Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));

@@ -6,12 +6,11 @@ import java.sql.SQLException;
 
 public class DivisionQuery {
 
-    public static String getDivisionName(int divisionId, int countryId) throws SQLException {
-        String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ? and Country_ID = ?";
+    public static String getDivisionName(int divisionId) throws SQLException {
+        String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
 
         ps.setInt(1, divisionId);
-        ps.setInt(2, countryId);
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             return rs.getString("Division");
@@ -36,6 +35,17 @@ public class DivisionQuery {
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
 
         ps.setString(1, divisionName);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            return rs.getInt("Country_ID");
+        }
+        return -1;
+    }
+    public static int getCountryId(int divisionId) throws SQLException {
+        String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+
+        ps.setInt(1, divisionId);
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             return rs.getInt("Country_ID");
