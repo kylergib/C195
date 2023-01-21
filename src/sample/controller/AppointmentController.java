@@ -7,7 +7,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import sample.Utilities.AppointmentQuery;
+import sample.Utilities.CustomerQuery;
 import sample.model.Appointment;
+import sample.model.Customer;
 
 import java.net.URL;
 import java.sql.SQLException;
@@ -29,6 +31,13 @@ public class AppointmentController implements Initializable {
     public TableColumn endTimeColumn;
     public TableColumn customerIdColumn;
     public TableColumn userIdColumn;
+    public TableView customerTable;
+    public TableColumn appointmentTableCustomerIdColumn;
+    public TableColumn customerNameColumn;
+    public TableColumn customerAddressColumn;
+    public TableColumn customerPostalCodeColumn;
+    public TableColumn customerPhoneColumn;
+    public TableColumn customerDivisionId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -57,24 +66,29 @@ public class AppointmentController implements Initializable {
             System.out.println("after appointments start");
             endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
             System.out.println("after appointments end");
-            customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+            appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
             System.out.println("after appointments cust");
             userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
             System.out.println("after appointments user");
 
         //LEFT OFF trying to figure out the best way to get contact info from a contact id
+            ObservableList<Customer> allCustomers = CustomerQuery.getAllCustomers();
+            setCustomerTable(allCustomers);
+
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
 
-
-//        product_table.setItems(productList);
-//        productIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-//        productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
-//        productInventoryLevelColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
-//        productPriceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-
-
+    }
+    public void setCustomerTable(ObservableList customerList) {
+        customerTable.setItems(customerList);
+        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
+        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
+        customerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
+        customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
+//        customerDivisionId.setCellValueFactory(new PropertyValueFactory<>("division"));
     }
 }

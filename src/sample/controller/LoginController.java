@@ -66,7 +66,7 @@ public class LoginController implements Initializable {
                 System.out.println("Loaded");
                 Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 System.out.println("Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();");
-                Scene scene = new Scene(root, 1100, 650);
+                Scene scene = new Scene(root, 1550, 600);
                 System.out.println("Scene scene = new Scene(root, 1100, 650);");
                 stage.setTitle("typeVar");
                 System.out.println("stage.setTitle(\"typeVar\");");

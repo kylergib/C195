@@ -5,7 +5,9 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.Utilities.CountryQuery;
 import sample.Utilities.DBConnection;
+import sample.Utilities.DivisionQuery;
 import sample.Utilities.UserQuery;
 import sample.model.User;
 
@@ -18,11 +20,17 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
+        DBConnection.openConnection();
+        System.out.println(CountryQuery.getCountryName(3));
+        System.out.println(CountryQuery.getCountryId("U.S"));
+        System.out.println(DivisionQuery.getDivisionName(4,1));
+        System.out.println(DivisionQuery.getDivisionId("Colorado"));
+        System.out.println(DivisionQuery.getCountryId("Yukon"));
         Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
-        DBConnection.openConnection();
+
         //--------
         //testing sql statements
         //ALL WORK SO FAR

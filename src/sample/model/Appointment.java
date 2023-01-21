@@ -11,8 +11,6 @@ public class Appointment {
     private String type;
     private Timestamp start;
     private Timestamp end;
-//    private Timestamp createDate;
-//    private String createdBy;
     private int customerId;
     private int userId;
     private int contactId;
