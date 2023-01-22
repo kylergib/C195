@@ -2,11 +2,11 @@ package sample.Utilities;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Main;
+import sample.controller.LoginController;
 import sample.model.Customer;
 
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class CustomerQuery {
 
@@ -34,7 +34,7 @@ public class CustomerQuery {
         return allCustomers;
     }
     public static int insert(Customer newCustomer) throws SQLException {
-        String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code,Phone, Division_ID) VALUES(?,?,?,?,?)";
+        String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code,Phone, Division_ID,Create_Date,Created_By,Last_Update,Last_Updated_By) VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ps.setString(1, newCustomer.getCustomerName());
 
@@ -43,10 +43,17 @@ public class CustomerQuery {
         String streetAddress = addressSplit[0].trim();
         String division = addressSplit[1].trim();
 
+
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+
         ps.setString(2,streetAddress);
         ps.setString(3, newCustomer.getPostalCode());
         ps.setString(4, newCustomer.getPhoneNumber());
         ps.setInt(5,DivisionQuery.getDivisionId(division));
+        ps.setTimestamp(6,currentTime);
+        ps.setString(7, Main.myUser.getUserName());
+        ps.setTimestamp(8,currentTime);
+        ps.setString(9, Main.myUser.getUserName());
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
@@ -59,7 +66,7 @@ public class CustomerQuery {
     }
 
     public static int update(Customer newCustomer) throws SQLException {
-        String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
+        String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ?, Last_Update = ?, Last_Updated_By = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ps.setString(1, newCustomer.getCustomerName());
 
@@ -67,12 +74,14 @@ public class CustomerQuery {
 //        String country = addressSplit[2].trim();
         String streetAddress = addressSplit[0].trim();
         String division = addressSplit[1].trim();
-
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         ps.setString(2,streetAddress);
         ps.setString(3, newCustomer.getPostalCode());
         ps.setString(4, newCustomer.getPhoneNumber());
         ps.setInt(5,DivisionQuery.getDivisionId(division));
-        ps.setInt(6,newCustomer.getCustomerId());
+        ps.setTimestamp(6,currentTime);
+        ps.setString(7, Main.myUser.getUserName());
+        ps.setInt(8,newCustomer.getCustomerId());
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
 
