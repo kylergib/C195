@@ -33,4 +33,48 @@ public class CustomerQuery {
         }
         return allCustomers;
     }
+    public static int insert(Customer newCustomer) throws SQLException {
+        String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code,Phone, Division_ID) VALUES(?,?,?,?,?)";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1, newCustomer.getCustomerName());
+
+        String[] addressSplit = newCustomer.getAddress().split(",", 3);
+//        String country = addressSplit[2].trim();
+        String streetAddress = addressSplit[0].trim();
+        String division = addressSplit[1].trim();
+
+        ps.setString(2,streetAddress);
+        ps.setString(3, newCustomer.getPostalCode());
+        ps.setString(4, newCustomer.getPhoneNumber());
+        ps.setInt(5,DivisionQuery.getDivisionId(division));
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+    public static int delete(Customer newCustomer) throws SQLException {
+        String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1, newCustomer.getCustomerId());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+
+    public static int update(Customer newCustomer) throws SQLException {
+        String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ? WHERE Customer_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1, newCustomer.getCustomerName());
+
+        String[] addressSplit = newCustomer.getAddress().split(",", 3);
+//        String country = addressSplit[2].trim();
+        String streetAddress = addressSplit[0].trim();
+        String division = addressSplit[1].trim();
+
+        ps.setString(2,streetAddress);
+        ps.setString(3, newCustomer.getPostalCode());
+        ps.setString(4, newCustomer.getPhoneNumber());
+        ps.setInt(5,DivisionQuery.getDivisionId(division));
+        ps.setInt(6,newCustomer.getCustomerId());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+
+    }
 }

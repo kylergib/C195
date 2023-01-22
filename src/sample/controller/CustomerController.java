@@ -86,14 +86,26 @@ public class CustomerController implements Initializable {
             }
         }
 
-        Customer newCustomer = new Customer(CustomerQuery.getAllCustomers().size() +1,
-                customerName,address,customerPostal, customerNumber);
-        System.out.println(newCustomer);
+
+//        System.out.println(newCustomer);
         //TODO: save customer to database
 
-        if (newCustomer != null) {
+//        if (newCustomer != null) {
+        if (customerTitleVar == "Add Customer") {
+            Customer newCustomer = new Customer(CustomerQuery.getAllCustomers().size() +1,
+                    customerName,address,customerPostal, customerNumber);
+            int rowsAffected = CustomerQuery.insert(newCustomer);
+            System.out.println(rowsAffected);
+            loadAppointments(actionEvent);
+        } else if (customerTitleVar == "Modify Customer") {
+            Customer newCustomer = new Customer(currentCustomer.getCustomerId(),
+                    customerName,address,customerPostal, customerNumber);
+            int rowsAffected = CustomerQuery.update(newCustomer);
+            System.out.println(rowsAffected);
             loadAppointments(actionEvent);
         }
+
+//        }
 
     }
 

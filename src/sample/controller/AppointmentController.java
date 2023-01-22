@@ -118,7 +118,15 @@ public class AppointmentController implements Initializable {
 
     }
 
-    public void deleteCustomerClicked(ActionEvent actionEvent) {
+    public void deleteCustomerClicked(ActionEvent actionEvent) throws SQLException {
+        Customer selectedCustomer = getCustomerSelected();
+        if (selectedCustomer == null) {
+            System.out.println("No customer is selected");
+            return;
+        } else {
+            CustomerQuery.delete(selectedCustomer);
+            customerTable.setItems(CustomerQuery.getAllCustomers());
+        }
     }
 
     public void loadCustomerWindow(ActionEvent actionEvent, String windowTitle) throws IOException {
