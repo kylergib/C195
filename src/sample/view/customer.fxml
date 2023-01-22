@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CustomerController">
+   <children>
+      <Label alignment="CENTER" layoutX="28.0" layoutY="110.0" prefHeight="17.0" prefWidth="107.0" text="Name" textAlignment="CENTER" />
+      <TextField fx:id="customerNameText" layoutX="143.0" layoutY="105.0" />
+      <ComboBox fx:id="customerCountryComboBox" layoutX="143.0" layoutY="261.0" onAction="#customerCountrySelected" prefHeight="26.0" prefWidth="160.0" />
+      <TextField disable="true" editable="false" layoutX="143.0" layoutY="62.0" promptText="Autogen " />
+      <Label alignment="CENTER" layoutX="28.0" layoutY="67.0" prefHeight="17.0" prefWidth="107.0" text="ID" textAlignment="CENTER" />
+      <Label fx:id="customerTitle" layoutX="196.0" layoutY="14.0" text="Add New Customer">
+         <font>
+            <Font size="26.0" />
+         </font>
+      </Label>
+      <TextField fx:id="customerNumberText" layoutX="143.0" layoutY="144.0" />
+      <Label alignment="CENTER" layoutX="28.0" layoutY="149.0" prefHeight="17.0" prefWidth="107.0" text="Number" textAlignment="CENTER" />
+      <Label alignment="CENTER" layoutX="375.0" layoutY="187.0" prefHeight="17.0" prefWidth="107.0" text="Name" textAlignment="CENTER" />
+      <TextField layoutX="416.0" layoutY="183.0" />
+      <Label alignment="CENTER" layoutX="28.0" layoutY="187.0" prefHeight="17.0" prefWidth="107.0" text="Street Address" textAlignment="CENTER" />
+      <TextField fx:id="customerStreetAddressText" layoutX="143.0" layoutY="183.0" />
+      <Label alignment="CENTER" layoutX="28.0" layoutY="225.0" prefHeight="17.0" prefWidth="107.0" text="Postal Code" textAlignment="CENTER" />
+      <TextField fx:id="customerPostalText" layoutX="143.0" layoutY="221.0" />
+      <ComboBox fx:id="customerDivisionComboBox" layoutX="143.0" layoutY="301.0" prefHeight="26.0" prefWidth="160.0" />
+      <Label alignment="CENTER" layoutX="28.0" layoutY="266.0" prefHeight="17.0" prefWidth="107.0" text="Country" textAlignment="CENTER" />
+      <Label alignment="CENTER" layoutX="28.0" layoutY="306.0" prefHeight="17.0" prefWidth="107.0" text="Division" textAlignment="CENTER" />
+      <Button fx:id="saveCustomer" layoutX="511.0" layoutY="345.0" mnemonicParsing="false" onAction="#saveCustomerClicked" prefHeight="25.0" prefWidth="66.0" text="Save" />
+      <Button fx:id="cancelCustomer" layoutX="429.0" layoutY="345.0" mnemonicParsing="false" onAction="#cancelCustomerClicked" prefHeight="25.0" prefWidth="66.0" text="Cancel" />
+   </children>
+</AnchorPane>

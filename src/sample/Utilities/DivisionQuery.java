@@ -1,5 +1,9 @@
 package sample.Utilities;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
+import java.sql.Array;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -52,4 +56,18 @@ public class DivisionQuery {
         }
         return -1;
     }
+
+    public static ObservableList<String> getAllDivisionsFromCountry(int countryId) throws SQLException {
+        ObservableList<String> allDivisions = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE Country_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+
+        ps.setInt(1, countryId);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            allDivisions.add(rs.getString("Division"));
+        }
+        return allDivisions;
+    }
+
 }

@@ -1,5 +1,8 @@
 package sample.Utilities;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,5 +30,15 @@ public class CountryQuery {
             return rs.getString("Country");
         }
         return null;
+    }
+    public static ObservableList<String> getAllCountries() throws SQLException {
+        ObservableList<String> allCountries = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM COUNTRIES";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            allCountries.add(rs.getString("Country"));
+        }
+        return allCountries;
     }
 }
