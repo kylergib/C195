@@ -61,18 +61,11 @@ public class LoginController implements Initializable {
 //            stage.show();
 
             try {
-                System.out.println("Before Loaded");
                 Parent root = FXMLLoader.load(getClass().getResource("/appointments.fxml"));
-                System.out.println("Loaded");
                 Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-                System.out.println("Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();");
                 Scene scene = new Scene(root, 1550, 600);
-                System.out.println("Scene scene = new Scene(root, 1100, 650);");
-                stage.setTitle("typeVar");
-                System.out.println("stage.setTitle(\"typeVar\");");
-
+                stage.setTitle("Scheduler");
                 stage.setScene(scene);
-                System.out.println("stage.setScene(scene);");
                 stage.show();
             } catch (Exception e) {
                 System.out.println(e);

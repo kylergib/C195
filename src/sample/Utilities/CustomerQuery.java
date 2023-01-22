@@ -19,25 +19,14 @@ public class CustomerQuery {
         while(rs.next()) {
             int id = rs.getInt("Customer_ID");
             String customerName = rs.getString("Customer_Name");
-            System.out.println("2");
             String address = rs.getString("Address");
-            System.out.println("3");
             String postalCode = rs.getString("Postal_Code");
-            System.out.println("4");
             String phone = rs.getString("Phone");
             int divisionId = rs.getInt("Division_ID");
-//            int countryId = rs.getInt("Country_ID");
             String divisionString = DivisionQuery.getDivisionName(divisionId);
             int countryId = DivisionQuery.getCountryId(divisionId);
             String countryString = CountryQuery.getCountryName(countryId);
-            System.out.println(divisionString + " " + countryString);
             String newAddress = address + ", " + divisionString + ", " + countryString;
-
-
-
-
-
-
             Customer newCustomer = new Customer(id,customerName,newAddress,
                     postalCode,phone);
             allCustomers.add(newCustomer);

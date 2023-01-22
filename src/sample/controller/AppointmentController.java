@@ -53,34 +53,33 @@ public class AppointmentController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        System.out.println("TESTING appointments");
         currentUserLabel.setText(myUser.getUserName());
         try {
-            System.out.println("TESTING sql appointments");
+
             ObservableList<Appointment> allAppointments = AppointmentQuery.getAllAppointments();
 
             appointmentTable.setItems(allAppointments);
-            System.out.println("after appointments");
+
             appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
             titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-            System.out.println("after appointments title");
+
             descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-            System.out.println("after appointments desc");
+
             locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-            System.out.println("after appointments loc");
+
             contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-            System.out.println("after appointments con");
+
             typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-            System.out.println("after appointments type");
+
             startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-            System.out.println("after appointments start");
+
             endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
-            System.out.println("after appointments end");
+
             appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-            System.out.println("after appointments cust");
+
             userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-            System.out.println("after appointments user");
+
 
         //LEFT OFF trying to figure out the best way to get contact info from a contact id
             ObservableList<Customer> allCustomers = CustomerQuery.getAllCustomers();
@@ -104,17 +103,38 @@ public class AppointmentController implements Initializable {
     }
 
     public void addCustomerClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/customer.fxml"));
-        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle("Add Customer");
-        stage.setScene(scene);
-        stage.show();
+        loadCustomerWindow(actionEvent, "Add Customer");
     }
 
-    public void modifyCustomerClicked(ActionEvent actionEvent) {
+    public void modifyCustomerClicked(ActionEvent actionEvent) throws IOException {
+        Customer selectedCustomer = getCustomerSelected();
+        if (selectedCustomer == null) {
+            System.out.println("No customer is selected");
+            return;
+        }
+        CustomerController.currentCustomer = selectedCustomer;
+        loadCustomerWindow(actionEvent, "Modify Customer");
+
+
     }
 
     public void deleteCustomerClicked(ActionEvent actionEvent) {
+    }
+
+    public void loadCustomerWindow(ActionEvent actionEvent, String windowTitle) throws IOException {
+        CustomerController.customerTitleVar = windowTitle;
+        Parent root = FXMLLoader.load(getClass().getResource("/customer.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 400);
+        stage.setTitle(windowTitle);
+        stage.setScene(scene);
+        stage.show();
+    }
+    public Customer getCustomerSelected() {
+        if (customerTable.getSelectionModel().getSelectedItem() != null) {
+            Customer selectedCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
+            return selectedCustomer;
+        }
+        return null;
     }
 }

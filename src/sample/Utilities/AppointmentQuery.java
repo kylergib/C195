@@ -17,25 +17,19 @@ public abstract class AppointmentQuery {
         String sql = "SELECT * FROM APPOINTMENTS";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        System.out.println("1");
         while(rs.next()) {
             int id = rs.getInt("Appointment_ID");
             String title = rs.getString("Title");
-            System.out.println("2");
             String description = rs.getString("Description");
-            System.out.println("3");
             String location = rs.getString("Location");
-            System.out.println("4");
             String type = rs.getString("Type");
             Timestamp start = rs.getTimestamp("Start");
             Timestamp end = rs.getTimestamp("End");
-            System.out.println("5");
             int customerId = rs.getInt("Customer_ID");
             int userId = rs.getInt("User_ID");
             int contactId = rs.getInt("Contact_ID");
 
 
-            System.out.println(title + ", " + description + ", " + location + ", " + start + ", " + customerId + ", " + userId + ", " + contactId);
             Appointment newAppointment = new Appointment(id, title, description, location,
                     type, start, end, customerId, userId, contactId);
             allAppointments.add(newAppointment);

@@ -21,13 +21,13 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         DBConnection.openConnection();
-        System.out.println(CountryQuery.getCountryName(3));
-        System.out.println(CountryQuery.getCountryId("U.S"));
-        System.out.println(DivisionQuery.getDivisionName(4));
-        System.out.println(DivisionQuery.getDivisionId("Colorado"));
-        System.out.println(DivisionQuery.getCountryId("Yukon"));
-        System.out.println(DivisionQuery.getAllDivisionsFromCountry(2));
-        System.out.println(CountryQuery.getAllCountries());
+//        System.out.println(CountryQuery.getCountryName(3));
+//        System.out.println(CountryQuery.getCountryId("U.S"));
+//        System.out.println(DivisionQuery.getDivisionName(4));
+//        System.out.println(DivisionQuery.getDivisionId("Colorado"));
+//        System.out.println(DivisionQuery.getCountryId("Yukon"));
+//        System.out.println(DivisionQuery.getAllDivisionsFromCountry(2));
+//        System.out.println(CountryQuery.getAllCountries());
 
         Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
         primaryStage.setTitle("Login");
