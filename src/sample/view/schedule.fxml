@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AppointmentController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1550.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ScheduleController">
    <children>
       <TableView fx:id="appointmentTable" fixedCellSize="0.0" layoutX="14.0" layoutY="94.0" prefHeight="362.0" prefWidth="861.0">
         <columns>
@@ -34,12 +34,12 @@
             <TableColumn fx:id="customerPhoneColumn" prefWidth="127.0" text="Phone" />
         </columns>
       </TableView>
-      <Label layoutX="404.0" layoutY="49.0" text="Appointments" underline="true">
+      <Label layoutX="362.0" layoutY="49.0" text="Appointments" underline="true">
          <font>
             <Font size="30.0" />
          </font>
       </Label>
-      <Label layoutX="1185.0" layoutY="49.0" text="Customers" underline="true">
+      <Label layoutX="1144.0" layoutY="49.0" text="Customers" underline="true">
          <font>
             <Font size="30.0" />
          </font>
@@ -47,5 +47,9 @@
       <Button fx:id="addCustomer" layoutX="1185.0" layoutY="485.0" mnemonicParsing="false" onAction="#addCustomerClicked" text="Add Customer" />
       <Button fx:id="modifyCustomer" layoutX="1296.0" layoutY="485.0" mnemonicParsing="false" onAction="#modifyCustomerClicked" text="Modify Customer" />
       <Button fx:id="deleteCustomer" layoutX="1423.0" layoutY="485.0" mnemonicParsing="false" onAction="#deleteCustomerClicked" text="Delete Customer" />
+      <Button fx:id="addAppointment" layoutX="451.0" layoutY="486.0" mnemonicParsing="false" onAction="#addAppointmentClicked" text="Add Appointment" />
+      <Button fx:id="modifyAppointment" layoutX="582.0" layoutY="486.0" mnemonicParsing="false" onAction="#modifyAppointmentClicked" text="Modify Appointment" />
+      <Button fx:id="deleteAppointment" layoutX="729.0" layoutY="486.0" mnemonicParsing="false" onAction="#deleteAppointmentClicked" text="Delete Appointment" />
+      <Label fx:id="errorLabel" layoutX="14.0" layoutY="563.0" prefHeight="17.0" prefWidth="1502.0" />
    </children>
 </AnchorPane>

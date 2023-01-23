@@ -86,4 +86,15 @@ public class CustomerQuery {
         return rowsAffected;
 
     }
+    public static String getCustomerName(int customerId) throws SQLException {
+        String sql = "SELECT * FROM CUSTOMERS WHERE Customer_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,customerId);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            String customerName = rs.getString("Customer_Name");
+            return customerName;
+        }
+        return null;
+    }
 }

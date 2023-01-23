@@ -10,7 +10,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.input.InputMethodEvent;
 import javafx.stage.Stage;
 import sample.Utilities.CountryQuery;
 import sample.Utilities.CustomerQuery;
@@ -36,6 +35,7 @@ public class CustomerController implements Initializable {
     public static Customer currentCustomer;
     public TextField customerIdText;
 
+    @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerTitle.setText(customerTitleVar);
 //        if (customerTitleVar == "Add Customer") {
@@ -127,7 +127,7 @@ public class CustomerController implements Initializable {
     }
 
     public void loadAppointments(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/appointments.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
         Scene scene = new Scene(root, 1550, 600);
         stage.setTitle("typeVar");

@@ -2,6 +2,7 @@ package sample.Utilities;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.Main;
 import sample.model.Appointment;
 
 import java.sql.PreparedStatement;
@@ -37,18 +38,57 @@ public abstract class AppointmentQuery {
         return allAppointments;
     }
 
-//    public ObservableList getAllAppointments() {
-//        return allAppointments;
-//    }
+    public static int insert(Appointment newAppointment) throws SQLException {
 
-//    ResultSet rs = ps.executeQuery();
-//        while(rs.next()) { //rs.next returns bool if values are next
-//        int userId = rs.getInt("User_ID");
-//        String userName = rs.getString("User_Name");
-//        String password = rs.getString(("Password"));
-//
-//        System.out.println(userId + " | " + userName + " | " +  password);
-//        User user = new User(userId,userName,password);
-//        return user;
+        String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1,newAppointment.getTitle());
+        ps.setString(2,newAppointment.getDescription());
+        ps.setString(3,newAppointment.getLocation());
+        ps.setString(4,newAppointment.getType());
+        ps.setTimestamp(5,newAppointment.getStart());
+        ps.setTimestamp(6,newAppointment.getEnd());
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        ps.setTimestamp(7,currentTime);
+        ps.setString(8, Main.myUser.getUserName());
+        ps.setTimestamp(9,currentTime);
+        ps.setString(10, Main.myUser.getUserName());
+        ps.setInt(11,newAppointment.getCustomerId());
+        ps.setInt(12,Main.myUser.getUserId());
+        ps.setInt(13,newAppointment.getContactId());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+    public static int delete(Appointment newAppointment) throws SQLException {
+        String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1, newAppointment.getId());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+    }
+    public static int update(Appointment newAppointment) throws SQLException {
+        String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?,Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
+
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setString(1,newAppointment.getTitle());
+        ps.setString(2,newAppointment.getDescription());
+        ps.setString(3,newAppointment.getLocation());
+        ps.setString(4,newAppointment.getType());
+        ps.setTimestamp(5,newAppointment.getStart());
+        ps.setTimestamp(6,newAppointment.getEnd());
+
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        ps.setTimestamp(7,currentTime);
+//        ps.setString(6, Main.myUser.getUserName());
+//        ps.setTimestamp(7,currentTime);
+        ps.setString(8, Main.myUser.getUserName());
+        ps.setInt(9,newAppointment.getCustomerId());
+        ps.setInt(10,Main.myUser.getUserId());
+        ps.setInt(11,newAppointment.getContactId());
+        ps.setInt(12,newAppointment.getId());
+        int rowsAffected = ps.executeUpdate();
+        return rowsAffected;
+
+    }
 
 }

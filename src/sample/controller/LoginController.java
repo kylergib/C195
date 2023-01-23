@@ -1,6 +1,5 @@
 package sample.controller;
 
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -9,10 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
-import sample.Utilities.AppointmentQuery;
 import sample.Utilities.UserQuery;
-import sample.model.Appointment;
-import sample.model.User;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -52,7 +48,7 @@ public class LoginController implements Initializable {
         myUser = UserQuery.select(userNameTextField.getText(),passwordTextField.getText());
         if (myUser != null) {
             System.out.println("MYUSER = " + myUser.getUserName());
-//            Parent root = FXMLLoader.load(getClass().getResource("view/appointments.fxml"));
+//            Parent root = FXMLLoader.load(getClass().getResource("view/schedule.fxml"));
 //
 //            Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
 //            Scene scene = new Scene(root, 800, 600);
@@ -61,7 +57,7 @@ public class LoginController implements Initializable {
 //            stage.show();
 
             try {
-                Parent root = FXMLLoader.load(getClass().getResource("/appointments.fxml"));
+                Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
                 Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
                 Scene scene = new Scene(root, 1550, 600);
                 stage.setTitle("Scheduler");

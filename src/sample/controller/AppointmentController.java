@@ -1,5 +1,6 @@
 package sample.controller;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -7,142 +8,286 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.DatePicker;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import sample.Main;
 import sample.Utilities.AppointmentQuery;
+import sample.Utilities.ContactQuery;
 import sample.Utilities.CustomerQuery;
+import sample.Utilities.UserQuery;
 import sample.model.Appointment;
 import sample.model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.ResourceBundle;
 
-import static sample.Main.myUser;
-
 public class AppointmentController implements Initializable {
-    public Label userLabel;
-    public Label currentUserLabel;
-    public TableView appointmentTable;
-    public TableColumn appointmentIDColumn;
-    public TableColumn titleColumn;
-    public TableColumn descriptionColumn;
-    public TableColumn locationColumn;
-    public TableColumn contactColumn;
-    public TableColumn typeColumn;
-    public TableColumn startTimeColumn;
-    public TableColumn endTimeColumn;
-    public TableColumn customerIdColumn;
-    public TableColumn userIdColumn;
-    public TableView customerTable;
-    public TableColumn appointmentTableCustomerIdColumn;
-    public TableColumn customerNameColumn;
-    public TableColumn customerAddressColumn;
-    public TableColumn customerPostalCodeColumn;
-    public TableColumn customerPhoneColumn;
-    public TableColumn customerDivisionId;
-    public Button addCustomer;
-    public Button modifyCustomer;
-    public Button deleteCustomer;
+
+    public static String appointmentTitleVar;
+    public static Appointment currentAppointment;
+    public ComboBox appointmentContact;
+    public TextField appointmentTitle;
+    public TextField appointmentDescription;
+    public TextField appointmentLocation;
+    public DatePicker appointmentDate;
+    public TextField appointmentStartTime;
+    public TextField appointmentEndTime;
+    public ComboBox appointmentStartCombo;
+    public ComboBox appointmentEndCombo;
+    public ComboBox customerNameCombo;
+    public TextField appointmentType;
+    public Label appointmentHeader;
+    public Label errorLabel;
+    public TextField appointmentId;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        ObservableList<String> comboBoxTimes = FXCollections.observableArrayList();
+        comboBoxTimes.add("AM");
+        comboBoxTimes.add("PM");
+        appointmentHeader.setText((String) appointmentTitleVar);
+        appointmentStartCombo.setItems(comboBoxTimes);
+        appointmentEndCombo.setItems(comboBoxTimes);
 
-        currentUserLabel.setText(myUser.getUserName());
         try {
-
-            ObservableList<Appointment> allAppointments = AppointmentQuery.getAllAppointments();
-
-            appointmentTable.setItems(allAppointments);
-
-            appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-
-            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-
-            descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-            locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-
-            contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-
-            typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-
-            startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-
-            endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
-
-            appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-
-            userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
-
-        //LEFT OFF trying to figure out the best way to get contact info from a contact id
+            appointmentContact.setItems(ContactQuery.getAllContacts());
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+        try {
+            ObservableList<String> customerNames = FXCollections.observableArrayList();
             ObservableList<Customer> allCustomers = CustomerQuery.getAllCustomers();
-            setCustomerTable(allCustomers);
-
-
+            for (int i = 0; i < allCustomers.size(); i++) {
+                customerNames.add(allCustomers.get(i).getCustomerName());
+            }
+            customerNameCombo.setItems(customerNames);
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
+        if (appointmentTitleVar == "Modify Appointment") {
 
-    }
-    public void setCustomerTable(ObservableList customerList) {
-        customerTable.setItems(customerList);
-        customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        customerNameColumn.setCellValueFactory(new PropertyValueFactory<>("customerName"));
-        customerAddressColumn.setCellValueFactory(new PropertyValueFactory<>("address"));
-        customerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
-        customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
-//        customerDivisionId.setCellValueFactory(new PropertyValueFactory<>("division"));
-    }
+            try {
+                appointmentContact.setValue(ContactQuery.getContactName(currentAppointment.getContactId()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            appointmentTitle.setText(currentAppointment.getTitle());
+            appointmentDescription.setText(currentAppointment.getDescription());
+            appointmentLocation.setText(currentAppointment.getLocation());
+            LocalDate appointmentDateCurrent = currentAppointment.getStart().toLocalDateTime().toLocalDate();
 
-    public void addCustomerClicked(ActionEvent actionEvent) throws IOException {
-        loadCustomerWindow(actionEvent, "Add Customer");
-    }
+            appointmentDate.setValue(appointmentDateCurrent);
+            int startTimeHour = currentAppointment.getStart().toLocalDateTime().getHour();
+            String startTimeMinute = String.valueOf(currentAppointment.getStart().toLocalDateTime().getMinute());
+            int endTimeHour = currentAppointment.getEnd().toLocalDateTime().getHour();
+            String endTimeMinute = String.valueOf(currentAppointment.getEnd().toLocalDateTime().getMinute());
+            if (startTimeMinute.length() == 1) {
+                startTimeMinute = startTimeMinute + "0";
+            }
+            if (endTimeMinute.length() == 1) {
+                endTimeMinute = endTimeMinute + "0";
+            }
+            String startCurrentTimeType;
+            String endCurrentTimeType;
+            if (startTimeHour > 12) {
+                startCurrentTimeType = "PM";
+                startTimeHour = startTimeHour - 12;
+            } else {
+                startCurrentTimeType = "AM";
+            }
 
-    public void modifyCustomerClicked(ActionEvent actionEvent) throws IOException {
-        Customer selectedCustomer = getCustomerSelected();
-        if (selectedCustomer == null) {
-            System.out.println("No customer is selected");
-            return;
-        }
-        CustomerController.currentCustomer = selectedCustomer;
-        loadCustomerWindow(actionEvent, "Modify Customer");
+            if (endTimeHour > 12) {
+                endCurrentTimeType = "PM";
+                endTimeHour = endTimeHour - 12;
+            } else {
+                endCurrentTimeType = "AM";
+            }
 
+            String startTime = String.valueOf(startTimeHour) + ":" + startTimeMinute;
+            String endTime = String.valueOf(endTimeHour) + ":" + endTimeMinute;
 
-    }
+            System.out.println(startTime + " " + endTime);
 
-    public void deleteCustomerClicked(ActionEvent actionEvent) throws SQLException {
-        Customer selectedCustomer = getCustomerSelected();
-        if (selectedCustomer == null) {
-            System.out.println("No customer is selected");
-            return;
+            appointmentStartTime.setText(startTime);
+            appointmentEndTime.setText(endTime);
+            appointmentStartCombo.setValue(startCurrentTimeType);
+            appointmentEndCombo.setValue(endCurrentTimeType);
+            try {
+                customerNameCombo.setValue(CustomerQuery.getCustomerName(currentAppointment.getCustomerId()));
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+            appointmentType.setText(currentAppointment.getType());
+            appointmentId.setText(String.valueOf(currentAppointment.getId()));
+
         } else {
-            CustomerQuery.delete(selectedCustomer);
-            customerTable.setItems(CustomerQuery.getAllCustomers());
+            appointmentEndCombo.setValue("AM");
+            appointmentStartCombo.setValue("AM");
         }
     }
 
-    public void loadCustomerWindow(ActionEvent actionEvent, String windowTitle) throws IOException {
-        CustomerController.customerTitleVar = windowTitle;
-        Parent root = FXMLLoader.load(getClass().getResource("/customer.fxml"));
+    public void appointmentSaveClicked(ActionEvent actionEvent) throws SQLException, IOException {
+        String contact = (String) appointmentContact.getValue();
+        String name = (String) customerNameCombo.getValue();
+        String title = appointmentTitle.getText();
+        String description = appointmentDescription.getText();
+        String location = appointmentLocation.getText();
+        LocalDate dateAppointment = appointmentDate.getValue();
+        String startTime = appointmentStartTime.getText();
+        String endTime = appointmentEndTime.getText();
+        String startCombo = (String) appointmentStartCombo.getValue();
+        String endCombo = (String) appointmentEndCombo.getValue();
+        String appointmentTypeNew = appointmentType.getText();
+        System.out.println(startTime + " " + endTime);
+
+        System.out.println("CONTACT" + contact);
+        if (contact == null) {
+            errorLabel.setText("Contact field cannot be blank");
+            return;
+        }
+        if (name == null) {
+            errorLabel.setText("Name field cannot be blank");
+            return;
+        }
+        if (title == "") {
+            errorLabel.setText("Title field cannot be blank");
+            return;
+        }
+        if (description == "") {
+            errorLabel.setText("Description field cannot be blank");
+            return;
+        }
+        if (location == "") {
+            errorLabel.setText("Location field cannot be blank");
+            return;
+        }
+        if (dateAppointment == null) {
+            errorLabel.setText("Date field cannot be blank");
+            return;
+        }
+        if (startTime == "") {
+            errorLabel.setText("Start time field cannot be blank");
+            return;
+        }
+        if (endTime == "") {
+            errorLabel.setText("End time field cannot be blank");
+            return;
+        }
+        if (appointmentTypeNew == "") {
+            errorLabel.setText("Type field cannot be blank");
+            return;
+        }
+//        System.out.println("TESTING SPLIT " + startTime.split(":")[0]);
+        try {
+            int startTimeHour = Integer.valueOf(startTime.split(":")[0]);
+            int startTimeMinute = Integer.valueOf(startTime.split(":")[1]);
+            if (startCombo == "PM" && startTimeHour < 12 && startTimeHour > 0 ) {
+                int newTime = startTimeHour + 12;
+                startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
+            } else if (startCombo == "AM" && startTimeHour == 12) {
+                int newTime = 0;
+                startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
+            } else {
+                startTime = startTime + ":00";
+            }
+        } catch (Exception e) {
+            System.out.println("Only 1 number");
+            startTime = startTime + ":00" + ":00";
+        }
+
+
+
+        try {
+            int endTimeHour = Integer.valueOf(endTime.split(":")[0]);
+            int endTimeMinute = Integer.valueOf(endTime.split(":")[1]);
+            if (endCombo == "PM" && endTimeHour < 12 && endTimeHour > 0 ) {
+                int newTime = endTimeHour + 12;
+                endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
+            } else if (endCombo == "AM" && endTimeHour == 12) {
+                int newTime = 0;
+                endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
+            } else {
+                endTime = endTime + ":00";
+            }
+            System.out.println("START TIME "+startTime +" "+startCombo);
+
+        } catch (Exception e) {
+            System.out.println("Only one number");
+            endTime = endTime + ":00" + ":00";
+        }
+
+
+        String finalStart = String.valueOf(dateAppointment) + " " + startTime;
+        System.out.println("END TIME "+endTime+" "+ endCombo);
+        String finalEnd = String.valueOf(dateAppointment) + " " + endTime;
+        System.out.println(finalStart);
+        System.out.println(finalEnd);
+        Timestamp appointmentStart;
+        Timestamp appointmentEnd;
+        try {
+            appointmentStart = Timestamp.valueOf(finalStart);
+            appointmentEnd = Timestamp.valueOf(finalEnd);
+            System.out.println(appointmentStart.compareTo(appointmentEnd));
+        } catch (Exception e) {
+            errorLabel.setText("Start and end times cannot have letters in the text field.");
+            return;
+
+        }
+            if (appointmentStart.compareTo(appointmentEnd) >= 0) {
+                errorLabel.setText("End time is before start time");
+                return;
+            } else {
+                errorLabel.setText("");
+            }
+            System.out.println(appointmentStart + " " + appointmentEnd);
+            if (appointmentTitleVar == "Add Appointment") {
+                Appointment newAppointment = new Appointment(AppointmentQuery.getAllAppointments().size()+1,
+                        title,description,location,appointmentTypeNew,appointmentStart,appointmentEnd,
+                        customerNameCombo.getSelectionModel().getSelectedIndex()+1, Main.myUser.getUserId(),
+                        appointmentContact.getSelectionModel().getSelectedIndex()+1);
+                System.out.println(newAppointment.getContactId() + " " + newAppointment.getCustomerId());
+                int rowsAffected = AppointmentQuery.insert(newAppointment);
+                System.out.println(rowsAffected);
+            } else if (appointmentTitleVar == "Modify Appointment") {
+                Appointment newAppointment = new Appointment(currentAppointment.getId(),
+                        title,description,location,appointmentTypeNew,appointmentStart,appointmentEnd,
+                        customerNameCombo.getSelectionModel().getSelectedIndex()+1, Main.myUser.getUserId(),
+                        appointmentContact.getSelectionModel().getSelectedIndex()+1);
+                System.out.println(newAppointment.getContactId() + " " + newAppointment.getCustomerId());
+                int rowsAffected = AppointmentQuery.update(newAppointment);
+                System.out.println(rowsAffected);
+
+
+
+            }
+            appointmentCancelClicked(actionEvent);
+//            System.out.println("Saved successfully");
+
+
+
+
+//        public Appointment(int id, String title, String description, String location,
+//                String type, Timestamp start, Timestamp end, int customerId,
+//        int userId, int contactId)
+
+    }
+
+    public void appointmentCancelClicked(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 400);
-        stage.setTitle(windowTitle);
+        Scene scene = new Scene(root, 1550, 600);
+        stage.setTitle("Scheduler");
         stage.setScene(scene);
         stage.show();
     }
-    public Customer getCustomerSelected() {
-        if (customerTable.getSelectionModel().getSelectedItem() != null) {
-            Customer selectedCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
-            return selectedCustomer;
-        }
-        return null;
-    }
+
 }
