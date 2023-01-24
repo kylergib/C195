@@ -187,43 +187,52 @@ public class AppointmentController implements Initializable {
             return;
         }
 //        System.out.println("TESTING SPLIT " + startTime.split(":")[0]);
+        int startTimeHour = -1;
+        int startTimeMinute = 0;
         try {
-            int startTimeHour = Integer.valueOf(startTime.split(":")[0]);
-            int startTimeMinute = Integer.valueOf(startTime.split(":")[1]);
-            if (startCombo == "PM" && startTimeHour < 12 && startTimeHour > 0 ) {
-                int newTime = startTimeHour + 12;
-                startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
-            } else if (startCombo == "AM" && startTimeHour == 12) {
-                int newTime = 0;
-                startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
-            } else {
-                startTime = startTime + ":00";
-            }
+            startTimeHour = Integer.valueOf(startTime.split(":")[0]);
+            startTimeMinute = Integer.valueOf(startTime.split(":")[1]);
         } catch (Exception e) {
             System.out.println("Only 1 number");
+//            startTime = startTime + ":00" + ":00";
+        }
+
+        if (startCombo == "PM" && startTimeHour < 12 && startTimeHour > 0 ) {
+            int newTime = startTimeHour + 12;
+            startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
+        } else if (startCombo == "AM" && startTimeHour == 12) {
+            int newTime = 0;
+            startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
+        } else if (startTime.contains(":")) {
+            startTime = startTime + ":00";
+        } else {
             startTime = startTime + ":00" + ":00";
         }
 
 
-
+        int endTimeHour = -1;
+        int endTimeMinute = 0;
         try {
-            int endTimeHour = Integer.valueOf(endTime.split(":")[0]);
-            int endTimeMinute = Integer.valueOf(endTime.split(":")[1]);
+            endTimeHour = Integer.valueOf(endTime.split(":")[0]);
+            endTimeMinute = Integer.valueOf(endTime.split(":")[1]);
+        } catch (Exception e) {
+            System.out.println("Only one number");
+//            endTime = endTime + ":00" + ":00";
+        }
             if (endCombo == "PM" && endTimeHour < 12 && endTimeHour > 0 ) {
                 int newTime = endTimeHour + 12;
                 endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
             } else if (endCombo == "AM" && endTimeHour == 12) {
                 int newTime = 0;
                 endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
-            } else {
+            } else if (endTime.contains(":")) {
                 endTime = endTime + ":00";
+            } else {
+                endTime = endTime + ":00" + ":00";
             }
             System.out.println("START TIME "+startTime +" "+startCombo);
 
-        } catch (Exception e) {
-            System.out.println("Only one number");
-            endTime = endTime + ":00" + ":00";
-        }
+
 
 
         String finalStart = String.valueOf(dateAppointment) + " " + startTime;

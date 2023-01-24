@@ -20,7 +20,13 @@ import sample.model.Customer;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+import java.util.Locale;
 import java.util.ResourceBundle;
 
 import static sample.Main.myUser;
@@ -49,6 +55,8 @@ public class ScheduleController implements Initializable {
     public Button addCustomer;
     public Button modifyCustomer;
     public Button deleteCustomer;
+    public static Boolean firstStart = true;
+    public Label errorLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -81,16 +89,65 @@ public class ScheduleController implements Initializable {
             userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
 
 
-        //LEFT OFF trying to figure out the best way to get contact info from a contact id
+
             ObservableList<Customer> allCustomers = CustomerQuery.getAllCustomers();
             setCustomerTable(allCustomers);
+            if (firstStart == true) {
+                Boolean appointmentClose = false;
+                for (int i = 0; i < allAppointments.size(); i++) {
+
+                    Appointment thisAppointment = allAppointments.get(i);
+                    System.out.println(thisAppointment.getStart());
+                    Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+
+                    LocalDateTime currentTimeDate = currentTime.toLocalDateTime();
+                    LocalDateTime fifteenMinutes = currentTimeDate.plus(15, ChronoUnit.MINUTES);
+
+                    LocalDateTime appointmentDateTime = thisAppointment.getStart().toLocalDateTime();
+
+                    Boolean appointmentBetween = (appointmentDateTime.isAfter(currentTimeDate) && appointmentDateTime.isBefore(fifteenMinutes));
+                    if (appointmentBetween && thisAppointment.getUserId() == myUser.getUserId()) {
+                        String messageLabel = "You have an appointment within 15 minutes!\n" +
+                                "Appointment ID: " + thisAppointment.getId() + "\nTime: " + thisAppointment.getStart();
+                        openDialog(messageLabel, "fifteen");
+                        appointmentClose = true;
+                        firstStart = false;
+                    }
+
+                }
+                if (appointmentClose == false) {
+
+                    openDialog("You have no upcoming appointments ", "fifteen");
+                    firstStart = false;
+                }
+                firstStart = false;
+
+            }
 
 
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
 
+    }
+    public void openDialog(String labelText, String dialogType) throws IOException {
+        DialogController.newLabelText = labelText;
+        DialogController.dialogType = dialogType;
+        Parent root = FXMLLoader.load(getClass().getResource("/dialog.fxml"));
+        Stage stage = new Stage();
+        Scene scene = new Scene(root, 400, 200);
+        stage.setScene(scene);
+
+        stage.showAndWait();
+        if (DialogController.confirmVar != true) {
+
+            return;
+        } else {
+            DialogController.confirmVar = false;
+        }
     }
     public void setCustomerTable(ObservableList customerList) {
         customerTable.setItems(customerList);
@@ -120,12 +177,20 @@ public class ScheduleController implements Initializable {
 
     public void deleteCustomerClicked(ActionEvent actionEvent) throws SQLException {
         Customer selectedCustomer = getCustomerSelected();
+        int customerAppointments = AppointmentQuery.getCustomerAppointments(selectedCustomer.getCustomerId());
+//        System.out.println(customerAppointments);
+//        System.out.println(customerAppointments.it);
         if (selectedCustomer == null) {
-            System.out.println("No customer is selected");
+//            System.out.println("No customer is selected");
+            errorLabel.setText("No customer is selected");
+            return;
+        } else if (customerAppointments > 0) {
+            errorLabel.setText("Please cancel any appointments for this customer before trying to delete them.");
             return;
         } else {
-            CustomerQuery.delete(selectedCustomer);
-            customerTable.setItems(CustomerQuery.getAllCustomers());
+//            CustomerQuery.delete(selectedCustomer);
+//            customerTable.setItems(CustomerQuery.getAllCustomers());
+            errorLabel.setText("Successfully deleted customer");
         }
     }
 

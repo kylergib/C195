@@ -11,36 +11,36 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="475.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.AppointmentController">
    <children>
-      <Label alignment="CENTER" layoutX="22.0" layoutY="71.0" prefHeight="17.0" prefWidth="71.0" text="ID" />
-      <TextField fx:id="appointmentId" disable="true" layoutX="104.0" layoutY="67.0" promptText="Autogen " />
-      <Button fx:id="appointmentSave" layoutX="433.0" layoutY="405.0" mnemonicParsing="false" onAction="#appointmentSaveClicked" prefHeight="25.0" prefWidth="57.0" text="Save" />
-      <ComboBox fx:id="appointmentContact" layoutX="104.0" layoutY="294.0" prefHeight="25.0" prefWidth="161.0" />
-      <Button fx:id="appointmentCancel" layoutX="510.0" layoutY="405.0" mnemonicParsing="false" onAction="#appointmentCancelClicked" text="Cancel" />
-      <Label alignment="CENTER" layoutX="22.0" layoutY="106.0" prefHeight="17.0" prefWidth="71.0" text="Customer" />
+      <ComboBox fx:id="customerNameCombo" layoutX="104.0" layoutY="102.0" prefHeight="25.0" prefWidth="161.0" />
+      <TextField fx:id="appointmentType" layoutX="104.0" layoutY="142.0" />
       <TextField fx:id="appointmentTitle" layoutX="104.0" layoutY="177.0" />
       <TextField fx:id="appointmentDescription" layoutX="104.0" layoutY="215.0" prefHeight="25.0" prefWidth="475.0" />
+      <TextField fx:id="appointmentLocation" layoutX="104.0" layoutY="255.0" />
+      <ComboBox fx:id="appointmentContact" layoutX="104.0" layoutY="294.0" prefHeight="25.0" prefWidth="161.0" />
+      <DatePicker fx:id="appointmentDate" layoutX="104.0" layoutY="343.0" prefHeight="25.0" prefWidth="161.0" />
+      <TextField fx:id="appointmentStartTime" layoutX="104.0" layoutY="385.0" prefHeight="25.0" prefWidth="71.0" />
+      <ComboBox fx:id="appointmentStartCombo" layoutX="190.0" layoutY="385.0" prefHeight="25.0" prefWidth="77.0" />
+      <ComboBox fx:id="appointmentEndCombo" layoutX="190.0" layoutY="419.0" prefHeight="25.0" prefWidth="77.0" />
+      <Button fx:id="appointmentSave" layoutX="433.0" layoutY="405.0" mnemonicParsing="false" onAction="#appointmentSaveClicked" prefHeight="25.0" prefWidth="57.0" text="Save" />
+      <TextField fx:id="appointmentEndTime" layoutX="104.0" layoutY="419.0" prefHeight="25.0" prefWidth="71.0" />
+      <Label alignment="CENTER" layoutX="22.0" layoutY="71.0" prefHeight="17.0" prefWidth="71.0" text="ID" />
+      <TextField fx:id="appointmentId" disable="true" layoutX="104.0" layoutY="67.0" promptText="Autogen " />
+      <Button fx:id="appointmentCancel" layoutX="510.0" layoutY="405.0" mnemonicParsing="false" onAction="#appointmentCancelClicked" text="Cancel" />
+      <Label alignment="CENTER" layoutX="22.0" layoutY="106.0" prefHeight="17.0" prefWidth="71.0" text="Customer" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="181.0" prefHeight="17.0" prefWidth="71.0" text="Title" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="219.0" prefHeight="17.0" prefWidth="71.0" text="Description" />
-      <TextField fx:id="appointmentLocation" layoutX="104.0" layoutY="255.0" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="259.0" prefHeight="17.0" prefWidth="71.0" text="Location" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="298.0" prefHeight="17.0" prefWidth="71.0" text="Contact" />
-      <DatePicker fx:id="appointmentDate" layoutX="104.0" layoutY="343.0" prefHeight="25.0" prefWidth="161.0" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="347.0" prefHeight="17.0" prefWidth="71.0" text="Date" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="389.0" prefHeight="17.0" prefWidth="71.0" text="Start Time" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="423.0" prefHeight="17.0" prefWidth="71.0" text="End Time" />
-      <TextField fx:id="appointmentStartTime" layoutX="104.0" layoutY="385.0" prefHeight="25.0" prefWidth="71.0" />
-      <TextField fx:id="appointmentEndTime" layoutX="104.0" layoutY="419.0" prefHeight="25.0" prefWidth="71.0" />
-      <ComboBox fx:id="appointmentStartCombo" layoutX="190.0" layoutY="385.0" prefHeight="25.0" prefWidth="77.0" />
-      <ComboBox fx:id="appointmentEndCombo" layoutX="190.0" layoutY="419.0" prefHeight="25.0" prefWidth="77.0" />
       <Label fx:id="appointmentHeader" alignment="CENTER" layoutX="179.0" layoutY="14.0" prefHeight="31.0" prefWidth="242.0" text="Add Appointment">
          <font>
             <Font size="26.0" />
          </font>
       </Label>
-      <ComboBox fx:id="customerNameCombo" layoutX="104.0" layoutY="102.0" prefHeight="25.0" prefWidth="161.0" />
       <Label layoutX="300.0" layoutY="87.0" prefHeight="55.0" prefWidth="267.0" text="If you do not see a customer, please go to main page and add customer before creating an appointment for them." wrapText="true" />
       <Label fx:id="errorLabel" layoutX="22.0" layoutY="453.0" prefHeight="17.0" prefWidth="556.0" />
-      <TextField fx:id="appointmentType" layoutX="104.0" layoutY="142.0" />
       <Label alignment="CENTER" layoutX="22.0" layoutY="146.0" prefHeight="17.0" prefWidth="71.0" text="Type" />
    </children>
 </AnchorPane>
