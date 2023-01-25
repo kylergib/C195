@@ -57,5 +57,6 @@
       <ToggleButton fx:id="weekAppointmentsButton" layoutX="96.0" layoutY="55.0" mnemonicParsing="false" onAction="#weekAppointmentsButtonClicked" text="Week" />
       <Button fx:id="exitButton" layoutX="1557.0" layoutY="559.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
       <Button fx:id="reportsButton" layoutX="1480.0" layoutY="559.0" mnemonicParsing="false" onAction="#reportsButtonClicked" text="Reports" />
+      <Button fx:id="customerSchedule" layoutX="1121.0" layoutY="485.0" mnemonicParsing="false" onAction="#customerScheduleClicked" text="Customer Schedule" />
    </children>
 </AnchorPane>

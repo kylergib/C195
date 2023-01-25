@@ -289,9 +289,29 @@ public class ScheduleController implements Initializable {
         System.out.println("report");
         Parent root = FXMLLoader.load(getClass().getResource("/reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 600, 600);
+        Scene scene = new Scene(root, 670, 600);
         stage.setTitle("Scheduler");
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void customerScheduleClicked(ActionEvent actionEvent) throws IOException {
+        Customer selectedCustomer = getCustomerSelected();
+        if (selectedCustomer == null) {
+            System.out.println("No customer is selected");
+            errorLabel.setText("No customer is selected");
+            return;
+        }
+        CustomerScheduleController.currentCustomer = selectedCustomer;
+        loadCustomerSchedule(actionEvent);
+    }
+    public void loadCustomerSchedule(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/customerSchedule.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 977, 506);
+        stage.setTitle("Scheduler");
+        stage.setScene(scene);
+        stage.show();
+
     }
 }
