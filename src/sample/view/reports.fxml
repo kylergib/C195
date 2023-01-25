@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ReportController">
+   <children>
+      <TableView fx:id="monthTypeTable" layoutX="46.0" layoutY="74.0" prefHeight="509.0" prefWidth="310.0">
+        <columns>
+          <TableColumn fx:id="monthColumn" prefWidth="46.0" text="Month" />
+            <TableColumn fx:id="yearColumn" prefWidth="75.0" text="Year" />
+          <TableColumn fx:id="typeColumn" prefWidth="141.0" text="Type" />
+            <TableColumn fx:id="totalColumn" prefWidth="46.0" text="Total" />
+        </columns>
+      </TableView>
+      <Label alignment="TOP_CENTER" layoutX="59.0" layoutY="49.0" prefHeight="18.0" prefWidth="284.0" text="Total number of appointments by type and month" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="scheduleButton" layoutX="465.0" layoutY="558.0" mnemonicParsing="false" onAction="#scheduleButtonClicked" text="Schedule" />
+      <Button fx:id="exitButton" layoutX="548.0" layoutY="558.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
+   </children>
+</AnchorPane>

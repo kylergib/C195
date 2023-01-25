@@ -51,9 +51,11 @@
       <Button fx:id="addAppointment" layoutX="540.0" layoutY="485.0" mnemonicParsing="false" onAction="#addAppointmentClicked" text="Add Appointment" />
       <Button fx:id="modifyAppointment" layoutX="671.0" layoutY="485.0" mnemonicParsing="false" onAction="#modifyAppointmentClicked" text="Modify Appointment" />
       <Button fx:id="deleteAppointment" layoutX="818.0" layoutY="485.0" mnemonicParsing="false" onAction="#deleteAppointmentClicked" text="Delete Appointment" />
-      <Label fx:id="errorLabel" layoutX="93.0" layoutY="563.0" prefHeight="17.0" prefWidth="1502.0" />
+      <Label fx:id="errorLabel" layoutX="117.0" layoutY="563.0" prefHeight="17.0" prefWidth="1502.0" />
       <ToggleButton fx:id="allAppointmentsButton" layoutX="14.0" layoutY="55.0" mnemonicParsing="false" onAction="#allAppointmentsButtonClicked" selected="true" text="All" />
       <ToggleButton fx:id="monthAppointmentsButton" layoutX="45.0" layoutY="55.0" mnemonicParsing="false" onAction="#monthAppointmentsButtonClicked" text="Month" />
       <ToggleButton fx:id="weekAppointmentsButton" layoutX="96.0" layoutY="55.0" mnemonicParsing="false" onAction="#weekAppointmentsButtonClicked" text="Week" />
+      <Button fx:id="exitButton" layoutX="1557.0" layoutY="559.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
+      <Button fx:id="reportsButton" layoutX="1480.0" layoutY="559.0" mnemonicParsing="false" onAction="#reportsButtonClicked" text="Reports" />
    </children>
 </AnchorPane>

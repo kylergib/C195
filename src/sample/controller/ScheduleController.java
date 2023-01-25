@@ -1,5 +1,6 @@
 package sample.controller;
 
+import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -278,5 +279,19 @@ public class ScheduleController implements Initializable {
         appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
 
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+    }
+
+    public void exitButtonClicked() {
+        Platform.exit();
+    }
+
+    public void reportsButtonClicked(ActionEvent actionEvent) throws IOException {
+        System.out.println("report");
+        Parent root = FXMLLoader.load(getClass().getResource("/reports.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 600, 600);
+        stage.setTitle("Scheduler");
+        stage.setScene(scene);
+        stage.show();
     }
 }
