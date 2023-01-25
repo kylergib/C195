@@ -24,6 +24,7 @@ import sample.model.Customer;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
+import java.sql.Time;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Date;
@@ -47,6 +48,7 @@ public class AppointmentController implements Initializable {
     public Label appointmentHeader;
     public Label errorLabel;
     public TextField appointmentId;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -258,6 +260,20 @@ public class AppointmentController implements Initializable {
                 errorLabel.setText("");
             }
             System.out.println(appointmentStart + " " + appointmentEnd);
+            if (appointmentStart.toLocalDateTime().getHour() < 8 || appointmentStart.toLocalDateTime().getHour() > 21) {
+                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00)");
+                return;
+            } else if (appointmentEnd.toLocalDateTime().getHour() < 8 || appointmentEnd.toLocalDateTime().getHour() > 22) {
+                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00)");
+                return;
+            } else if (appointmentEnd.toLocalDateTime().getHour() == 22 && appointmentEnd.toLocalDateTime().getMinute() > 0) {
+                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00)");
+                return;
+            } else if (AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentStart) ||
+                    AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentEnd)) {
+                errorLabel.setText("Customer already has an appointment between this time.");
+                return;
+            }
             if (appointmentTitleVar == "Add Appointment") {
                 Appointment newAppointment = new Appointment(AppointmentQuery.getAllAppointments().size()+1,
                         title,description,location,appointmentTypeNew,appointmentStart,appointmentEnd,

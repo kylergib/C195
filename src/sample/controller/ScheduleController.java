@@ -7,10 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Utilities.AppointmentQuery;
@@ -57,39 +54,17 @@ public class ScheduleController implements Initializable {
     public Button deleteCustomer;
     public static Boolean firstStart = true;
     public Label errorLabel;
+    public ToggleButton allAppointmentsButton;
+    public ToggleButton monthAppointmentsButton;
+    public ToggleButton weekAppointmentsButton;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         currentUserLabel.setText(myUser.getUserName());
         try {
-
             ObservableList<Appointment> allAppointments = AppointmentQuery.getAllAppointments();
-
-            appointmentTable.setItems(allAppointments);
-
-            appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
-
-            titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
-
-            descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
-
-            locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
-
-            contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
-
-            typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
-
-            startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
-
-            endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
-
-            appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-
-            userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
-
-
-
+            setAppointmentTable(allAppointments);
             ObservableList<Customer> allCustomers = CustomerQuery.getAllCustomers();
             setCustomerTable(allCustomers);
             if (firstStart == true) {
@@ -252,5 +227,56 @@ public class ScheduleController implements Initializable {
         stage.setTitle(windowTitle);
         stage.setScene(scene);
         stage.show();
+    }
+
+    public void allAppointmentsButtonClicked(ActionEvent actionEvent) throws SQLException {
+        System.out.println("All Appointments clicked");
+        monthAppointmentsButton.setSelected(false);
+        weekAppointmentsButton.setSelected(false);
+        ObservableList allAppointments = AppointmentQuery.getAllAppointments();
+        setAppointmentTable(allAppointments);
+    }
+
+    public void monthAppointmentsButtonClicked(ActionEvent actionEvent) throws SQLException {
+        System.out.println("month appointments clicked");
+        allAppointmentsButton.setSelected(false);
+        weekAppointmentsButton.setSelected(false);
+        ObservableList appointmentsForMonth = AppointmentQuery.getAllMonthAppointments();
+        System.out.println(appointmentsForMonth);
+        setAppointmentTable(appointmentsForMonth);
+    }
+
+    public void weekAppointmentsButtonClicked(ActionEvent actionEvent) throws SQLException {
+        System.out.println("week appointments clicked");
+        allAppointmentsButton.setSelected(false);
+        monthAppointmentsButton.setSelected(false);
+        ObservableList weekAppointments = AppointmentQuery.getAllWeekAppointments();
+        setAppointmentTable(weekAppointments);
+    }
+
+    public void setAppointmentTable(ObservableList<Appointment> appointmentList) throws SQLException {
+
+
+        appointmentTable.setItems(appointmentList);
+
+        appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+
+        descriptionColumn.setCellValueFactory(new PropertyValueFactory<>("description"));
+
+        locationColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+
+        contactColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+
+        startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
+
+        endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
+
+        appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
+
+        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
     }
 }

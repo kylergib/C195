@@ -9,6 +9,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.YearMonth;
 
 public abstract class AppointmentQuery {
 
@@ -41,6 +45,66 @@ public abstract class AppointmentQuery {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM APPOINTMENTS WHERE Start BETWEEN ? and ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        LocalDateTime currentTimeDate = currentTime.toLocalDateTime();
+        System.out.println(currentTimeDate.getYear() + " " + currentTimeDate.getMonthValue());
+        YearMonth yearMonth = YearMonth.of(currentTimeDate.getYear(),currentTimeDate.getMonthValue());
+        LocalDateTime lastDayLocal = yearMonth.atEndOfMonth().atTime(11,59,00);
+        LocalDateTime firstDayLocal = yearMonth.atDay(1).atTime(0,0,1);
+        Timestamp firstDay = Timestamp.valueOf(firstDayLocal);
+        Timestamp lastDay = Timestamp.valueOf(lastDayLocal);
+//        System.out.println(firstDay + " " + lastDay);
+        ps.setTimestamp(1,firstDay);
+        ps.setTimestamp(2,lastDay);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+
+
+            Appointment newAppointment = new Appointment(id, title, description, location,
+                    type, start, end, customerId, userId, contactId);
+            allAppointments.add(newAppointment);
+        }
+        return allAppointments;
+    }
+    public static ObservableList<Appointment> getAllWeekAppointments() throws SQLException {
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Start BETWEEN ? and ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
+        LocalDate startTimeDate = currentTime.toLocalDateTime().toLocalDate();
+        LocalDate endTimeDate = currentTime.toLocalDateTime().toLocalDate();
+
+        System.out.println(startTimeDate.getDayOfWeek() + " " + DayOfWeek.MONDAY);
+        System.out.println(startTimeDate.minusDays(1).getDayOfWeek());
+        startTimeDate.minusDays(1);
+        System.out.println(startTimeDate.getDayOfWeek() + " " + DayOfWeek.MONDAY);
+        System.out.println(startTimeDate.getDayOfWeek() != DayOfWeek.MONDAY);
+        while (startTimeDate.getDayOfWeek() != DayOfWeek.MONDAY){
+            startTimeDate = startTimeDate.minusDays(1);
+        }
+        while (endTimeDate.getDayOfWeek() != DayOfWeek.FRIDAY){
+            endTimeDate = endTimeDate.plusDays(1);
+        }
+
+        Timestamp endDateAndTime = Timestamp.valueOf(String.valueOf(endTimeDate)+" "+"11:59:00");
+        Timestamp startDateAndTime = Timestamp.valueOf(String.valueOf(startTimeDate)+" "+"0:0:01");
+        System.out.println(startTimeDate + " " + endTimeDate.atStartOfDay());
+        System.out.println(startDateAndTime + " " + endDateAndTime);
+
+
+        ps.setTimestamp(1,startDateAndTime);
+        ps.setTimestamp(2,endDateAndTime);
         ResultSet rs = ps.executeQuery();
         while(rs.next()) {
             int id = rs.getInt("Appointment_ID");
@@ -124,24 +188,51 @@ public abstract class AppointmentQuery {
             return rs.getInt(1);
         }
        return -1;
-//       int id = rs.getInt("Appointment_ID");
-//            String title = rs.getString("Title");
-//            String description = rs.getString("Description");
-//            String location = rs.getString("Location");
-//            String type = rs.getString("Type");
-//            Timestamp start = rs.getTimestamp("Start");
-//            Timestamp end = rs.getTimestamp("End");
-//            int customerId = rs.getInt("Customer_ID");
-//            int userId = rs.getInt("User_ID");
-//            int contactId = rs.getInt("Contact_ID");
+
+    }
+//    public static int getAllCustomerAppointments(int customerId) throws SQLException {
+////        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+//        String sql = "SELECT COUNT(*) FROM APPOINTMENTS WHERE Customer_ID = ?";
+//        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+//        ps.setInt(1,customerId);
+//        ResultSet rs = ps.executeQuery();
 //
+//        while(rs.next()) {
+//            return rs.getInt(1);
+//        }
+//        return -1;
 //
+//    }
+    public static Boolean checkConflictingAppointments(int myCustomerId, Timestamp appointmentTime) throws SQLException {
+        ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM APPOINTMENTS WHERE Customer_ID = ?";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ps.setInt(1,myCustomerId);
+        ResultSet rs = ps.executeQuery();
+        while(rs.next()) {
+            int id = rs.getInt("Appointment_ID");
+            String title = rs.getString("Title");
+            String description = rs.getString("Description");
+            String location = rs.getString("Location");
+            String type = rs.getString("Type");
+            Timestamp start = rs.getTimestamp("Start");
+            Timestamp end = rs.getTimestamp("End");
+            int customerId = rs.getInt("Customer_ID");
+            int userId = rs.getInt("User_ID");
+            int contactId = rs.getInt("Contact_ID");
+
+            if (appointmentTime.before(end) && appointmentTime.after(start)) {
+                System.out.println("BETWEEN");
+                return true;
+            }
+
 //            Appointment newAppointment = new Appointment(id, title, description, location,
 //                    type, start, end, customerId, userId, contactId);
 //            allAppointments.add(newAppointment);
-//        }
+        }
 //        return allAppointments;
-//        return rs;
+        return false;
     }
+
 
 }

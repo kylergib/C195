@@ -59,7 +59,7 @@ public class LoginController implements Initializable {
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
                 Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-                Scene scene = new Scene(root, 1550, 600);
+                Scene scene = new Scene(root, 1640, 600);
                 stage.setTitle("Scheduler");
                 stage.setScene(scene);
                 stage.show();
