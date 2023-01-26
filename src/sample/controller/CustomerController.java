@@ -98,7 +98,6 @@ public class CustomerController implements Initializable {
     public void customerCountrySelected(ActionEvent actionEvent) throws SQLException {
         setDivisions((String) customerCountryComboBox.getValue());
     }
-
     public void setDivisions(String countryName) throws SQLException {
         int countryId = CountryQuery.getCountryId(countryName);
         ObservableList allDivisions = DivisionQuery.getAllDivisionsFromCountry(countryId);

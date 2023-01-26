@@ -162,9 +162,15 @@ public class AppointmentController implements Initializable {
         if (startTime == "") {
             errorLabel.setText("Start time field cannot be blank");
             return;
+        } else if (!startTime.contains(":") && startTime.length() > 2) {
+            errorLabel.setText("Please add a colon between the hour and minutes in your time fields.");
+            return;
         }
         if (endTime == "") {
             errorLabel.setText("End time field cannot be blank");
+            return;
+        } else if (!endTime.contains(":") && endTime.length() > 2) {
+            errorLabel.setText("Please add a colon between the hour and minutes in your time fields.");
             return;
         }
         if (appointmentTypeNew == "") {
