@@ -1,5 +1,5 @@
 package sample.controller;
-
+//cleanded
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,7 +20,6 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-//TODO: set tab order
 public class CustomerController implements Initializable {
 
     public ComboBox customerCountryComboBox;
@@ -38,7 +37,6 @@ public class CustomerController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         customerTitle.setText(customerTitleVar);
-//        if (customerTitleVar == "Add Customer") {
         try {
             ObservableList<String> allCountries = CountryQuery.getAllCountries();
             customerCountryComboBox.setItems(allCountries.sorted());
@@ -50,7 +48,6 @@ public class CustomerController implements Initializable {
             String country = addressSplit[2].trim();
             String streetAddress = addressSplit[0].trim();
             String division = addressSplit[1].trim();
-
             customerCountryComboBox.setValue(country);
             try {
                 setDivisions(country);
@@ -63,11 +60,8 @@ public class CustomerController implements Initializable {
             customerNumberText.setText(currentCustomer.getPhoneNumber());
             customerStreetAddressText.setText(streetAddress);
             customerPostalText.setText(currentCustomer.getPostalCode());
-
         }
-
     }
-
     public void saveCustomerClicked(ActionEvent actionEvent) throws SQLException, IOException {
         String customerCountry = (String) customerCountryComboBox.getValue();
         String customerDivision = (String) customerDivisionComboBox.getValue();
@@ -80,33 +74,21 @@ public class CustomerController implements Initializable {
                 customerNumber,customerStreetAddress,customerPostal};
         for (int i =0; i < checkStrings.length; i++) {
             if (checkStrings[i] == null) {
-                System.out.println("One of the fields is empty");
                 customerErrorLabel.setText("One of the fields is empty");
                 return;
             }
         }
-
-
-//        System.out.println(newCustomer);
-        //TODO: save customer to database
-
-//        if (newCustomer != null) {
         if (customerTitleVar == "Add Customer") {
             Customer newCustomer = new Customer(CustomerQuery.getAllCustomers().size() +1,
                     customerName,address,customerPostal, customerNumber);
             int rowsAffected = CustomerQuery.insert(newCustomer);
-            System.out.println(rowsAffected);
             loadAppointments(actionEvent);
         } else if (customerTitleVar == "Modify Customer") {
             Customer newCustomer = new Customer(currentCustomer.getCustomerId(),
                     customerName,address,customerPostal, customerNumber);
             int rowsAffected = CustomerQuery.update(newCustomer);
-            System.out.println(rowsAffected);
             loadAppointments(actionEvent);
         }
-
-//        }
-
     }
 
     public void cancelCustomerClicked(ActionEvent actionEvent) throws IOException {
@@ -114,7 +96,6 @@ public class CustomerController implements Initializable {
     }
 
     public void customerCountrySelected(ActionEvent actionEvent) throws SQLException {
-        System.out.println("COMBO");
         setDivisions((String) customerCountryComboBox.getValue());
     }
 
@@ -125,11 +106,10 @@ public class CustomerController implements Initializable {
         customerDivisionComboBox.setPromptText("");
         customerDivisionComboBox.setDisable(false);
     }
-
     public void loadAppointments(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1550, 600);
+        Scene scene = new Scene(root, 1640, 600);
         stage.setTitle("typeVar");
         stage.setScene(scene);
         stage.show();

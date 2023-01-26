@@ -1,5 +1,5 @@
 package sample.controller;
-
+//cleaned
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -42,6 +42,4 @@ public class DialogController  implements Initializable {
         Stage stage = (Stage) dialogConfirmButton.getScene().getWindow();
         stage.close();
     }
-
-
 }

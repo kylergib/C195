@@ -1,5 +1,5 @@
 package sample.Utilities;
 
-public abstract interface CalculateTime {
+public interface CalculateTime {
     String getTime(String time);
 }

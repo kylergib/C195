@@ -4,7 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DialogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="198.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.DialogController">
    <children>
       <Label fx:id="messageLabel" layoutX="52.0" layoutY="61.0" prefHeight="71.0" prefWidth="260.0" wrapText="true" />
       <Button fx:id="dialogCancelButton" layoutX="210.0" layoutY="160.0" mnemonicParsing="false" onAction="#dialogCancelButtonClicked" text="Cancel" />

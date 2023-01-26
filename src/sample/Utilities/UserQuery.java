@@ -1,5 +1,5 @@
 package sample.Utilities;
-
+//clean
 import sample.model.User;
 
 import java.sql.PreparedStatement;
@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public abstract class UserQuery {
-
     public static User select(String userString, String passwordString) throws SQLException {
         String sql = "SELECT * FROM USERS WHERE User_Name = ? AND Password = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -18,8 +17,6 @@ public abstract class UserQuery {
             int userId = rs.getInt("User_ID");
             String userName = rs.getString("User_Name");
             String password = rs.getString(("Password"));
-
-            System.out.println(userId + " | " + userName + " | " +  password);
             User user = new User(userId,userName,password);
             return user;
         }

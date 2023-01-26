@@ -1,9 +1,8 @@
 package sample.Utilities;
-
+//clean
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Main;
-import sample.controller.LoginController;
 import sample.model.Customer;
 
 import java.sql.*;
@@ -15,7 +14,6 @@ public class CustomerQuery {
         String sql = "SELECT * FROM CUSTOMERS";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ResultSet rs = ps.executeQuery();
-        System.out.println("1");
         while(rs.next()) {
             int id = rs.getInt("Customer_ID");
             String customerName = rs.getString("Customer_Name");
@@ -39,13 +37,9 @@ public class CustomerQuery {
         ps.setString(1, newCustomer.getCustomerName());
 
         String[] addressSplit = newCustomer.getAddress().split(",", 3);
-//        String country = addressSplit[2].trim();
         String streetAddress = addressSplit[0].trim();
         String division = addressSplit[1].trim();
-
-
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
-
         ps.setString(2,streetAddress);
         ps.setString(3, newCustomer.getPostalCode());
         ps.setString(4, newCustomer.getPhoneNumber());
@@ -69,9 +63,7 @@ public class CustomerQuery {
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ?, Last_Update = ?, Last_Updated_By = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
         ps.setString(1, newCustomer.getCustomerName());
-
         String[] addressSplit = newCustomer.getAddress().split(",", 3);
-//        String country = addressSplit[2].trim();
         String streetAddress = addressSplit[0].trim();
         String division = addressSplit[1].trim();
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
