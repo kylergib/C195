@@ -14,10 +14,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import sample.Main;
-import sample.Utilities.AppointmentQuery;
-import sample.Utilities.ContactQuery;
-import sample.Utilities.CustomerQuery;
-import sample.Utilities.UserQuery;
+import sample.Utilities.*;
 import sample.model.Appointment;
 import sample.model.Customer;
 
@@ -189,57 +186,81 @@ public class AppointmentController implements Initializable {
             return;
         }
 //        System.out.println("TESTING SPLIT " + startTime.split(":")[0]);
-        int startTimeHour = -1;
-        int startTimeMinute = 0;
-        try {
-            startTimeHour = Integer.valueOf(startTime.split(":")[0]);
-            startTimeMinute = Integer.valueOf(startTime.split(":")[1]);
-        } catch (Exception e) {
-            System.out.println("Only 1 number");
+//        int startTimeHour = -1;
+//        int startTimeMinute = 0;
+//        try {
+//            startTimeHour = Integer.valueOf(startTime.split(":")[0]);
+//            startTimeMinute = Integer.valueOf(startTime.split(":")[1]);
+//        } catch (Exception e) {
+//            System.out.println("Only 1 number");
+////            startTime = startTime + ":00" + ":00";
+//        }
+//
+//        if (startCombo == "PM" && startTimeHour < 12 && startTimeHour > 0 ) {
+//            int newTime = startTimeHour + 12;
+//            startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
+//        } else if (startCombo == "AM" && startTimeHour == 12) {
+//            int newTime = 0;
+//            startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
+//        } else if (startTime.contains(":")) {
+//            startTime = startTime + ":00";
+//        } else {
 //            startTime = startTime + ":00" + ":00";
-        }
+//        }
 
-        if (startCombo == "PM" && startTimeHour < 12 && startTimeHour > 0 ) {
-            int newTime = startTimeHour + 12;
-            startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
-        } else if (startCombo == "AM" && startTimeHour == 12) {
-            int newTime = 0;
-            startTime = String.valueOf(newTime + ":" + startTimeMinute + ":00");
-        } else if (startTime.contains(":")) {
-            startTime = startTime + ":00";
-        } else {
-            startTime = startTime + ":00" + ":00";
-        }
-
-
-        int endTimeHour = -1;
-        int endTimeMinute = 0;
-        try {
-            endTimeHour = Integer.valueOf(endTime.split(":")[0]);
-            endTimeMinute = Integer.valueOf(endTime.split(":")[1]);
-        } catch (Exception e) {
-            System.out.println("Only one number");
+        CalculateTime calcTime = firstTime -> {
+            int endTimeHour = -1;
+            int endTimeMinute = 0;
+            String time;
+            try {
+                endTimeHour = Integer.valueOf(firstTime.split(":")[0]);
+                endTimeMinute = Integer.valueOf(firstTime.split(":")[1]);
+            } catch (Exception e) {
+                System.out.println("Only one number");
 //            endTime = endTime + ":00" + ":00";
-        }
+            }
             if (endCombo == "PM" && endTimeHour < 12 && endTimeHour > 0 ) {
                 int newTime = endTimeHour + 12;
-                endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
+                time = String.valueOf(newTime + ":" + endTimeMinute + ":00");
             } else if (endCombo == "AM" && endTimeHour == 12) {
                 int newTime = 0;
-                endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
-            } else if (endTime.contains(":")) {
-                endTime = endTime + ":00";
+                time = String.valueOf(newTime + ":" + endTimeMinute + ":00");
+            } else if (firstTime.contains(":")) {
+                time = firstTime + ":00";
             } else {
-                endTime = endTime + ":00" + ":00";
+                time = firstTime + ":00" + ":00";
             }
-            System.out.println("START TIME "+startTime +" "+startCombo);
+            return time;
+        };
+//        int endTimeHour = -1;
+//        int endTimeMinute = 0;
+//        try {
+//            endTimeHour = Integer.valueOf(endTime.split(":")[0]);
+//            endTimeMinute = Integer.valueOf(endTime.split(":")[1]);
+//        } catch (Exception e) {
+//            System.out.println("Only one number");
+////            endTime = endTime + ":00" + ":00";
+//        }
+//            if (endCombo == "PM" && endTimeHour < 12 && endTimeHour > 0 ) {
+//                int newTime = endTimeHour + 12;
+//                endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
+//            } else if (endCombo == "AM" && endTimeHour == 12) {
+//                int newTime = 0;
+//                endTime = String.valueOf(newTime + ":" + endTimeMinute + ":00");
+//            } else if (endTime.contains(":")) {
+//                endTime = endTime + ":00";
+//            } else {
+//                endTime = endTime + ":00" + ":00";
+//            }
+//            System.out.println("START TIME "+startTime +" "+startCombo);
 
 
 
-
-        String finalStart = String.valueOf(dateAppointment) + " " + startTime;
+//        String finalStart = String.valueOf(dateAppointment) + " " + startTime;
+        String finalStart = String.valueOf(dateAppointment) + " " + calcTime.getTime(startTime);
         System.out.println("END TIME "+endTime+" "+ endCombo);
-        String finalEnd = String.valueOf(dateAppointment) + " " + endTime;
+//        String finalEnd = String.valueOf(dateAppointment) + " " + endTime;
+        String finalEnd = String.valueOf(dateAppointment) + " " + calcTime.getTime(endTime);
         System.out.println(finalStart);
         System.out.println(finalEnd);
         Timestamp appointmentStart;
@@ -271,8 +292,12 @@ public class AppointmentController implements Initializable {
                 return;
             } else if (AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentStart) ||
                     AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentEnd)) {
-                errorLabel.setText("Customer already has an appointment between this time.");
-                return;
+                if (appointmentTitleVar == "Add Appointment") {
+                    errorLabel.setText("Customer already has an appointment between this time.");
+                    return;
+                }
+
+
             }
             if (appointmentTitleVar == "Add Appointment") {
                 Appointment newAppointment = new Appointment(AppointmentQuery.getAllAppointments().size()+1,

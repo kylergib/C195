@@ -10,8 +10,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import sample.Utilities.UserQuery;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.time.ZoneId;
 import java.net.URL;
 import java.util.Locale;
@@ -46,15 +49,12 @@ public class LoginController implements Initializable {
 //        System.out.println(userNameTextField.getText());
 //        System.out.println(passwordTextField.getText());
         myUser = UserQuery.select(userNameTextField.getText(),passwordTextField.getText());
+        Timestamp currentTime = new Timestamp(System.currentTimeMillis());
         if (myUser != null) {
             System.out.println("MYUSER = " + myUser.getUserName());
-//            Parent root = FXMLLoader.load(getClass().getResource("view/schedule.fxml"));
-//
-//            Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-//            Scene scene = new Scene(root, 800, 600);
-//            stage.setTitle("Appointments");
-//            stage.setScene(scene);
-//            stage.show();
+            writeLoginActivity("Successful login from " + userNameTextField.getText()
+                    + " - " +currentTime);
+
 
             try {
                 Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
@@ -65,12 +65,17 @@ public class LoginController implements Initializable {
                 stage.show();
             } catch (Exception e) {
                 System.out.println(e);
+                writeLoginActivity("Unsuccessful login from " + userNameTextField.getText()
+                        + " - " +currentTime);
             }
 
 
         } else {
             System.out.println("Please check username or password.");
             loginErrorLabel.setText(rb.getString("error"));
+
+            writeLoginActivity("Unsuccessful login from " + userNameTextField.getText()
+            + " - " +currentTime);
         }
 
 
@@ -98,5 +103,14 @@ public class LoginController implements Initializable {
         titleLabel.setText(rb.getString("pleaseLogin"));
         timezoneLabel.setText(rb.getString("timezone"));
         loginErrorLabel.setText("");
+    }
+
+    public void writeLoginActivity(String textToWrite) throws IOException {
+        System.out.println("TESTING FILE WRITE LOGIN");
+        String filename = "login_activity.txt";
+        FileWriter fwriter = new FileWriter(filename, true);
+        PrintWriter outputFile = new PrintWriter(fwriter);
+        outputFile.println(textToWrite);
+        outputFile.close();
     }
 }

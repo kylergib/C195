@@ -15,6 +15,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Utilities.AppointmentQuery;
 import sample.Utilities.CustomerQuery;
+import sample.Utilities.GetAverageTime;
 import sample.model.Appointment;
 import sample.model.Customer;
 import sample.model.CustomerAverageTime;
@@ -137,18 +138,28 @@ public class ReportController implements Initializable {
             ObservableList allCustomerAppointments = AppointmentQuery.getAllCustomerAppointments(currentCustomer.getCustomerId());
             long totalTime = 0;
             int totalAppointments = allCustomerAppointments.size();
+            System.out.println("TOTAL APPOINTMENTS NUMBER " + totalAppointments);
+            if (totalAppointments > 0) {
 
-            for (int z = 0; z < totalAppointments; z++) {
-                Appointment currentAppointment = (Appointment) allCustomerAppointments.get(z);
-//                Timestamp start = Timestamp.valueOf("2023-01-26 09:00:00");
-//                Timestamp end = Timestamp.valueOf("2023-01-26 10:40:00");
+                for (int z = 0; z < totalAppointments; z++) {
+                    Appointment currentAppointment = (Appointment) allCustomerAppointments.get(z);
+                    //                Timestamp start = Timestamp.valueOf("2023-01-26 09:00:00");
+                    //                Timestamp end = Timestamp.valueOf("2023-01-26 10:40:00");
 
-                System.out.println((currentAppointment.getEnd().getTime() - currentAppointment.getStart().getTime())/60000);
-                totalTime = totalTime + (currentAppointment.getEnd().getTime() - currentAppointment.getStart().getTime())/60000;
+
+
+                    totalTime = totalTime + (currentAppointment.getEnd().getTime() - currentAppointment.getStart().getTime()) / 60000;
+                }
+                GetAverageTime customerAverageTime = (time, total) -> (time / total);
+
+                CustomerAverageTime newCustomer = new CustomerAverageTime(currentCustomer.getCustomerId(),
+                        customerAverageTime.averageTime(totalTime, Integer.toUnsignedLong(totalAppointments)), totalAppointments);
+                allAverages.add(newCustomer);
+            } else {
+                CustomerAverageTime newCustomer = new CustomerAverageTime(currentCustomer.getCustomerId(),
+                        0, totalAppointments);
+                allAverages.add(newCustomer);
             }
-            CustomerAverageTime newCustomer = new CustomerAverageTime(currentCustomer.getCustomerId(),
-                    totalTime,totalAppointments);
-            allAverages.add(newCustomer);
 
         }
         customerAverageTable.setItems(allAverages);

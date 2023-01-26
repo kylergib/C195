@@ -13,6 +13,8 @@ import sample.model.Appointment;
 import sample.model.ReportType;
 import sample.model.User;
 
+import java.io.FileWriter;
+import java.io.PrintWriter;
 import java.sql.Array;
 import java.sql.Timestamp;
 import java.time.DayOfWeek;
@@ -31,13 +33,13 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         DBConnection.openConnection();
 
-
-
-
         Parent root = FXMLLoader.load(getClass().getResource("view/login.fxml"));
         primaryStage.setTitle("Login");
         primaryStage.setScene(new Scene(root, 600, 400));
         primaryStage.show();
+
+
+
 
 
 
