@@ -124,12 +124,16 @@ public class ScheduleController implements Initializable {
     }
     public void deleteCustomerClicked(ActionEvent actionEvent) throws SQLException {
         Customer selectedCustomer = getCustomerSelected();
-        int customerAppointments = AppointmentQuery.getCustomerAppointments(selectedCustomer.getCustomerId());
         if (selectedCustomer == null) {
             errorLabel.setText("No customer is selected");
-        } else if (customerAppointments > 0) {
+            return;
+        }
+        int customerAppointments = AppointmentQuery.getCustomerAppointments(selectedCustomer.getCustomerId());
+        if (customerAppointments > 0) {
             errorLabel.setText("Please cancel any appointments for this customer before trying to delete them.");
         } else {
+            CustomerQuery.delete(selectedCustomer);
+            customerTable.setItems(CustomerQuery.getAllCustomers());
             errorLabel.setText("Successfully deleted customer");
         }
     }
@@ -157,6 +161,8 @@ public class ScheduleController implements Initializable {
         if (selectedAppointment != null) {
             AppointmentController.currentAppointment = selectedAppointment;
             loadAppointmentWindow(actionEvent, "Modify Appointment");
+        } else {
+            errorLabel.setText("No appointment is selected");
         }
 
     }
@@ -165,6 +171,8 @@ public class ScheduleController implements Initializable {
         if (selectedAppointment != null) {
             AppointmentQuery.delete(selectedAppointment);
             appointmentTable.setItems(AppointmentQuery.getAllAppointments());
+        } else {
+            errorLabel.setText("No appointment is selected");
         }
     }
     public Appointment getAppointmentSelected() {
