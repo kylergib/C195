@@ -25,6 +25,9 @@ import java.util.ResourceBundle;
  *
  * @author Kyle Gibson
  */
+/**
+ * a class that loads a window to view a customers schedule
+ */
 public class CustomerScheduleController implements Initializable {
     public static Customer currentCustomer;
     public TableView appointmentTable;

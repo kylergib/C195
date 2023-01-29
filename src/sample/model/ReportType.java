@@ -15,18 +15,33 @@ public class ReportType {
         this.year = year;
         this.total = total;
     }
+    /**
+     * @return type of appointment
+     */
     public String getType() {
         return this.type;
     }
+    /**
+     * @return month of appointment
+     */
     public int getMonth() {
         return this.month;
     }
+    /**
+     * @return year of appointment
+     */
     public int getYear() {
         return this.year;
     }
+    /**
+     * @return total number of appointments
+     */
     public int getTotal() {
         return this.total;
     }
+    /**
+     * @param total sets the total number of appointments
+     */
     public void setTotal(int total) {
         this.total = total;
     }

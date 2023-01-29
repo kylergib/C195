@@ -12,6 +12,9 @@ import java.util.ResourceBundle;
  *
  * @author Kyle Gibson
  */
+/**
+ * a class that create a dialog window to confirm
+ */
 public class DialogController  implements Initializable {
     public static String newLabelText;
     public static boolean confirmVar;

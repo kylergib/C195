@@ -11,7 +11,9 @@ import java.sql.SQLException;
  * @author Kyle Gibson
  */
 public class CountryQuery {
-
+    /**
+     * @return id of a specific country
+     */
     public static int getCountryId(String countryName) throws SQLException {
         String sql = "SELECT * FROM COUNTRIES WHERE Country = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -22,6 +24,9 @@ public class CountryQuery {
         }
         return -1;
     }
+    /**
+     * @return name of a country
+     */
     public static String getCountryName(int countryId) throws SQLException {
         String sql = "SELECT * FROM COUNTRIES WHERE Country_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -32,6 +37,9 @@ public class CountryQuery {
         }
         return null;
     }
+    /**
+     * @return list of all countries
+     */
     public static ObservableList<String> getAllCountries() throws SQLException {
         ObservableList<String> allCountries = FXCollections.observableArrayList();
         String sql = "SELECT * FROM COUNTRIES";

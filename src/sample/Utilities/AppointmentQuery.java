@@ -19,7 +19,9 @@ import java.time.YearMonth;
  */
 public abstract class AppointmentQuery {
 
-
+    /**
+     * @return observable list of type appointment and gets all appointments
+     */
     public static ObservableList<Appointment> getAllAppointments() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM APPOINTMENTS";
@@ -42,6 +44,9 @@ public abstract class AppointmentQuery {
         }
         return allAppointments;
     }
+    /**
+     * @return observable list of type appointment and gets all appointments for this month
+     */
     public static ObservableList<Appointment> getAllMonthAppointments() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM APPOINTMENTS WHERE Start BETWEEN ? and ?";
@@ -74,6 +79,9 @@ public abstract class AppointmentQuery {
         }
         return allAppointments;
     }
+    /**
+     * @return observable list of type appointment and gets all appointments for this week
+     */
     public static ObservableList<Appointment> getAllWeekAppointments() throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM APPOINTMENTS WHERE Start BETWEEN ? and ?";
@@ -110,6 +118,9 @@ public abstract class AppointmentQuery {
         }
         return allAppointments;
     }
+    /**
+     * @return number of rows affected when inserting an appointment into the database
+     */
     public static int insert(Appointment newAppointment) throws SQLException {
         String sql = "INSERT INTO APPOINTMENTS (Title, Description, Location, Type, Start, End, Create_Date, Created_By, Last_Update, Last_Updated_By, Customer_ID, User_ID, Contact_ID) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -130,6 +141,9 @@ public abstract class AppointmentQuery {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+    /**
+     * @return number of rows affected when inserting an appointment into the database
+     */
     public static int delete(Appointment newAppointment) throws SQLException {
         String sql = "DELETE FROM APPOINTMENTS WHERE Appointment_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -137,6 +151,9 @@ public abstract class AppointmentQuery {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+    /**
+     * @return number of rows affected when inserting an appointment into the database
+     */
     public static int update(Appointment newAppointment) throws SQLException {
         String sql = "UPDATE APPOINTMENTS SET Title = ?, Description = ?, Location = ?, Type = ?, Start = ?, End = ?,Last_Update = ?, Last_Updated_By = ?, Customer_ID = ?, User_ID = ?, Contact_ID = ? WHERE Appointment_ID = ?";
 
@@ -158,6 +175,9 @@ public abstract class AppointmentQuery {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+    /**
+     * @return number of total appointments for a customer
+     */
     public static int getCustomerAppointments(int customerId) throws SQLException {
         String sql = "SELECT COUNT(*) FROM APPOINTMENTS WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -168,6 +188,9 @@ public abstract class AppointmentQuery {
         }
        return -1;
     }
+    /**
+     * @return observable list of all appointments for a customer
+     */
     public static ObservableList getAllCustomerAppointments(int currentCustomerId) throws SQLException {
         ObservableList<Appointment> allAppointments = FXCollections.observableArrayList();
         String sql = "SELECT * FROM APPOINTMENTS WHERE Customer_ID = ?";
@@ -191,6 +214,9 @@ public abstract class AppointmentQuery {
         }
         return allAppointments;
     }
+    /**
+     * @return boolean if a customer already has an appointment for a certain time
+     */
     public static Boolean checkConflictingAppointments(int myCustomerId, Timestamp appointmentTime) throws SQLException {
         String sql = "SELECT * FROM APPOINTMENTS WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);

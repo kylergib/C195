@@ -26,6 +26,9 @@ import static sample.Main.myUser;
  *
  * @author Kyle Gibson
  */
+/**
+ * a class that creates a window to login
+ */
 public class LoginController implements Initializable {
     public Label titleLabel;
     public TextField userNameTextField;

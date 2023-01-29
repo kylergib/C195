@@ -30,6 +30,9 @@ import java.util.ResourceBundle;
  *
  * @author Kyle Gibson
  */
+/**
+ * a class that creates a window to view reports
+ */
 public class ReportController implements Initializable {
 
     public TableView monthTypeTable;

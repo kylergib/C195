@@ -13,13 +13,21 @@ public class CustomerAverageTime {
         this.customerId = customerId;
         this.numberOfAppointments = numberOfAppointments;
     }
-
+    /**
+     * @return customer id
+     */
     public int getCustomerId() {
         return customerId;
     }
+    /**
+     * @return average time customer has an appointment for
+     */
     public long getAverageTime() {
         return averageTime;
     }
+    /**
+     * @return total number of appointment a customer has
+     */
     public int getNumberOfAppointments() {
         return numberOfAppointments;
     }

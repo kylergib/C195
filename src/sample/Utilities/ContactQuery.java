@@ -11,6 +11,9 @@ import java.sql.SQLException;
  * @author Kyle Gibson
  */
 public class ContactQuery {
+    /**
+     * @return list of all contacts
+     */
     public static ObservableList<String> getAllContacts() throws SQLException {
         ObservableList<String> allContacts = FXCollections.observableArrayList();
         String sql = "SELECT * FROM CONTACTS";
@@ -23,6 +26,9 @@ public class ContactQuery {
         }
         return allContacts;
     }
+    /**
+     * @return name of a contact
+     */
     public static String getContactName(int contactId) throws SQLException {
         String sql = "SELECT * FROM CONTACTS WHERE Contact_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);

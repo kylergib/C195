@@ -24,6 +24,9 @@ import java.util.ResourceBundle;
  *
  * @author Kyle Gibson
  */
+/**
+ * a class that creates a window to add/modify a customer
+ */
 public class CustomerController implements Initializable {
 
     public ComboBox customerCountryComboBox;

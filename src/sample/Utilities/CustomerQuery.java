@@ -11,7 +11,9 @@ import java.sql.*;
  * @author Kyle Gibson
  */
 public class CustomerQuery {
-
+    /**
+     * @return list of all customers
+     */
     public static ObservableList<Customer> getAllCustomers() throws SQLException {
         ObservableList<Customer> allCustomers = FXCollections.observableArrayList();
         String sql = "SELECT * FROM CUSTOMERS";
@@ -34,6 +36,9 @@ public class CustomerQuery {
         }
         return allCustomers;
     }
+    /**
+     * @return number of rows affected when inserting a new customer into the database
+     */
     public static int insert(Customer newCustomer) throws SQLException {
         String sql = "INSERT INTO CUSTOMERS (Customer_Name, Address, Postal_Code,Phone, Division_ID,Create_Date,Created_By,Last_Update,Last_Updated_By) VALUES(?,?,?,?,?,?,?,?,?)";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -54,6 +59,9 @@ public class CustomerQuery {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
+    /**
+     * @return number of rows affected when deleting a customer from a database
+     */
     public static int delete(Customer newCustomer) throws SQLException {
         String sql = "DELETE FROM CUSTOMERS WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -61,7 +69,9 @@ public class CustomerQuery {
         int rowsAffected = ps.executeUpdate();
         return rowsAffected;
     }
-
+    /**
+     * @return number of rows affected when updating a customer in the database
+     */
     public static int update(Customer newCustomer) throws SQLException {
         String sql = "UPDATE CUSTOMERS SET Customer_Name = ?, Address = ?, Postal_Code = ?, Phone = ?, Division_ID = ?, Last_Update = ?, Last_Updated_By = ? WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
@@ -81,6 +91,9 @@ public class CustomerQuery {
         return rowsAffected;
 
     }
+    /**
+     * @return name of customer
+     */
     public static String getCustomerName(int customerId) throws SQLException {
         String sql = "SELECT * FROM CUSTOMERS WHERE Customer_ID = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);

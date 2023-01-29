@@ -28,6 +28,7 @@ import java.util.ResourceBundle;
  *
  * @author Kyle Gibson
  */
+/** a window to add/modify an appointment. */
 public class AppointmentController implements Initializable {
 
     public static String appointmentTitleVar;

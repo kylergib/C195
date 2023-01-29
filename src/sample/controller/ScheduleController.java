@@ -29,6 +29,9 @@ import static sample.Main.myUser;
  *
  * @author Kyle Gibson
  */
+/**
+ * a class that loads a window to view all appointments and customers
+ */
 public class ScheduleController implements Initializable {
     public Label userLabel;
     public Label currentUserLabel;

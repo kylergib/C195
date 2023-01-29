@@ -10,6 +10,9 @@ import java.sql.SQLException;
  * @author Kyle Gibson
  */
 public abstract class UserQuery {
+    /**
+     * @return user from database
+     */
     public static User select(String userString, String passwordString) throws SQLException {
         String sql = "SELECT * FROM USERS WHERE User_Name = ? AND Password = ?";
         PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
