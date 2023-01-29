@@ -1,11 +1,14 @@
 package sample.Utilities;
-//clean
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class DivisionQuery {
     public static String getDivisionName(int divisionId) throws SQLException {
         String sql = "SELECT * FROM FIRST_LEVEL_DIVISIONS WHERE Division_ID = ?";

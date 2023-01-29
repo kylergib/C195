@@ -2,7 +2,10 @@ package sample.Utilities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public abstract class DBConnection {
 
 

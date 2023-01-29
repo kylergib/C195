@@ -1,5 +1,8 @@
 package sample.model;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class ReportType {
     private String type;
     private int month;

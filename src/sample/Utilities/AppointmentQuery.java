@@ -1,5 +1,5 @@
 package sample.Utilities;
-//clean
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Main;
@@ -13,7 +13,10 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.YearMonth;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public abstract class AppointmentQuery {
 
 

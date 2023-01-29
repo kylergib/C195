@@ -1,5 +1,5 @@
 package sample.controller;
-//cleaned of print statements and comments
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -24,7 +24,10 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ResourceBundle;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class AppointmentController implements Initializable {
 
     public static String appointmentTitleVar;
@@ -123,6 +126,9 @@ public class AppointmentController implements Initializable {
             appointmentStartCombo.setValue("AM");
         }
     }
+    /**
+     * @param actionEvent save appointment when clicking the button
+     */
     public void appointmentSaveClicked(ActionEvent actionEvent) throws SQLException, IOException {
         String contact = (String) appointmentContact.getValue();
         String name = (String) customerNameCombo.getValue();
@@ -251,7 +257,9 @@ public class AppointmentController implements Initializable {
             }
             appointmentCancelClicked(actionEvent);
     }
-
+    /**
+     * @param actionEvent cancels out of window and returns to main window
+     */
     public void appointmentCancelClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

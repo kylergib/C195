@@ -1,11 +1,14 @@
 package sample.Utilities;
-//clean
+
 import sample.model.User;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public abstract class UserQuery {
     public static User select(String userString, String passwordString) throws SQLException {
         String sql = "SELECT * FROM USERS WHERE User_Name = ? AND Password = ?";

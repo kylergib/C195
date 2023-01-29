@@ -1,5 +1,5 @@
 package sample.controller;
-// cleaned
+
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -25,7 +25,10 @@ import java.time.temporal.ChronoUnit;
 import java.util.ResourceBundle;
 
 import static sample.Main.myUser;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class ScheduleController implements Initializable {
     public Label userLabel;
     public Label currentUserLabel;
@@ -93,6 +96,7 @@ public class ScheduleController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+
     public void openDialog(String labelText, String dialogType) throws IOException {
         DialogController.newLabelText = labelText;
         DialogController.dialogType = dialogType;
@@ -102,6 +106,9 @@ public class ScheduleController implements Initializable {
         stage.setScene(scene);
         stage.showAndWait();
     }
+    /**
+     * @param customerList sets the customer table with customer information
+     */
     public void setCustomerTable(ObservableList customerList) {
         customerTable.setItems(customerList);
         customerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
@@ -110,9 +117,15 @@ public class ScheduleController implements Initializable {
         customerPostalCodeColumn.setCellValueFactory(new PropertyValueFactory<>("postalCode"));
         customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     }
+    /**
+     * @param actionEvent loads window to add a new customer
+     */
     public void addCustomerClicked(ActionEvent actionEvent) throws IOException {
         loadCustomerWindow(actionEvent, "Add Customer");
     }
+    /**
+     * @param actionEvent loads a window to modify a customer record
+     */
     public void modifyCustomerClicked(ActionEvent actionEvent) throws IOException {
         Customer selectedCustomer = getCustomerSelected();
         if (selectedCustomer == null) {
@@ -122,7 +135,10 @@ public class ScheduleController implements Initializable {
         CustomerController.currentCustomer = selectedCustomer;
         loadCustomerWindow(actionEvent, "Modify Customer");
     }
-    public void deleteCustomerClicked(ActionEvent actionEvent) throws SQLException {
+    /**
+     * attempts to delete a selected customer
+     */
+    public void deleteCustomerClicked() throws SQLException {
         Customer selectedCustomer = getCustomerSelected();
         if (selectedCustomer == null) {
             errorLabel.setText("No customer is selected");
@@ -137,6 +153,9 @@ public class ScheduleController implements Initializable {
             errorLabel.setText("Successfully deleted customer");
         }
     }
+    /**
+     * @param actionEvent loads a customer window
+     */
     public void loadCustomerWindow(ActionEvent actionEvent, String windowTitle) throws IOException {
         CustomerController.customerTitleVar = windowTitle;
         Parent root = FXMLLoader.load(getClass().getResource("/customer.fxml"));
@@ -146,6 +165,9 @@ public class ScheduleController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**
+     * @return customer that is selected in the customer table
+     */
     public Customer getCustomerSelected() {
         if (customerTable.getSelectionModel().getSelectedItem() != null) {
             Customer selectedCustomer = (Customer) customerTable.getSelectionModel().getSelectedItem();
@@ -153,9 +175,15 @@ public class ScheduleController implements Initializable {
         }
         return null;
     }
+    /**
+     * @param actionEvent loads a window to add an appointment
+     */
     public void addAppointmentClicked(ActionEvent actionEvent) throws IOException {
         loadAppointmentWindow(actionEvent, "Add Appointment");
     }
+    /**
+     * @param actionEvent loads a window to modify an existing appointment
+     */
     public void modifyAppointmentClicked(ActionEvent actionEvent) throws IOException {
         Appointment selectedAppointment = getAppointmentSelected();
         if (selectedAppointment != null) {
@@ -166,7 +194,10 @@ public class ScheduleController implements Initializable {
         }
 
     }
-    public void deleteAppointmentClicked(ActionEvent actionEvent) throws SQLException {
+    /**
+     * attempts to delete a selected appointment
+     */
+    public void deleteAppointmentClicked() throws SQLException {
         Appointment selectedAppointment = getAppointmentSelected();
         if (selectedAppointment != null) {
             AppointmentQuery.delete(selectedAppointment);
@@ -175,6 +206,9 @@ public class ScheduleController implements Initializable {
             errorLabel.setText("No appointment is selected");
         }
     }
+    /**
+     * @return Appointment that is selected in appointments table
+     */
     public Appointment getAppointmentSelected() {
         if (appointmentTable.getSelectionModel().getSelectedItem() != null) {
             Appointment selectedAppointment = (Appointment) appointmentTable.getSelectionModel().getSelectedItem();
@@ -182,6 +216,9 @@ public class ScheduleController implements Initializable {
         }
         return null;
     }
+    /**
+     * @param actionEvent loads a window to add or modify an appointment
+     */
     public void loadAppointmentWindow(ActionEvent actionEvent, String windowTitle) throws IOException {
         AppointmentController.appointmentTitleVar = windowTitle;
         Parent root = FXMLLoader.load(getClass().getResource("/appointment.fxml"));
@@ -191,24 +228,36 @@ public class ScheduleController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
-    public void allAppointmentsButtonClicked(ActionEvent actionEvent) throws SQLException {
+    /**
+     * show all appointments in the appointments table
+     */
+    public void allAppointmentsButtonClicked() throws SQLException {
         monthAppointmentsButton.setSelected(false);
         weekAppointmentsButton.setSelected(false);
         ObservableList allAppointments = AppointmentQuery.getAllAppointments();
         setAppointmentTable(allAppointments);
     }
-    public void monthAppointmentsButtonClicked(ActionEvent actionEvent) throws SQLException {
+    /**
+     * show only appointments in the current month in the appointment table
+     */
+    public void monthAppointmentsButtonClicked() throws SQLException {
         allAppointmentsButton.setSelected(false);
         weekAppointmentsButton.setSelected(false);
         ObservableList appointmentsForMonth = AppointmentQuery.getAllMonthAppointments();
         setAppointmentTable(appointmentsForMonth);
     }
-    public void weekAppointmentsButtonClicked(ActionEvent actionEvent) throws SQLException {
+    /**
+     * show only appointments in the current week in the appointment table
+     */
+    public void weekAppointmentsButtonClicked() throws SQLException {
         allAppointmentsButton.setSelected(false);
         monthAppointmentsButton.setSelected(false);
         ObservableList weekAppointments = AppointmentQuery.getAllWeekAppointments();
         setAppointmentTable(weekAppointments);
     }
+    /**
+     * @param appointmentList fills the appointment table with data from appointmentList
+     */
     public void setAppointmentTable(ObservableList<Appointment> appointmentList) throws SQLException {
         appointmentTable.setItems(appointmentList);
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -222,9 +271,15 @@ public class ScheduleController implements Initializable {
         appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
     }
+    /**
+     * exits the app
+     */
     public void exitButtonClicked() {
         Platform.exit();
     }
+    /**
+     * @param actionEvent loads the reports window
+     */
     public void reportsButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -233,6 +288,9 @@ public class ScheduleController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**
+     * @param actionEvent attempts to load selected customers table if one is selected
+     */
     public void customerScheduleClicked(ActionEvent actionEvent) throws IOException {
         Customer selectedCustomer = getCustomerSelected();
         if (selectedCustomer == null) {
@@ -242,6 +300,9 @@ public class ScheduleController implements Initializable {
         CustomerScheduleController.currentCustomer = selectedCustomer;
         loadCustomerSchedule(actionEvent);
     }
+    /**
+     * @param actionEvent loads the selected customer's schedule
+     */
     public void loadCustomerSchedule(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/customerSchedule.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

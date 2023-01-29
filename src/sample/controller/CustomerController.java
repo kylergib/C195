@@ -1,5 +1,5 @@
 package sample.controller;
-//cleanded
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -20,6 +20,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class CustomerController implements Initializable {
 
     public ComboBox customerCountryComboBox;
@@ -62,6 +66,9 @@ public class CustomerController implements Initializable {
             customerPostalText.setText(currentCustomer.getPostalCode());
         }
     }
+    /**
+     * @param actionEvent saves customer when button is clicked
+     */
     public void saveCustomerClicked(ActionEvent actionEvent) throws SQLException, IOException {
         String customerCountry = (String) customerCountryComboBox.getValue();
         String customerDivision = (String) customerDivisionComboBox.getValue();
@@ -90,14 +97,21 @@ public class CustomerController implements Initializable {
             loadAppointments(actionEvent);
         }
     }
-
+    /**
+     * @param actionEvent cancels saving the customer and returns to main window when button is clicked
+     */
     public void cancelCustomerClicked(ActionEvent actionEvent) throws IOException {
         loadAppointments(actionEvent);
     }
-
-    public void customerCountrySelected(ActionEvent actionEvent) throws SQLException {
+    /**
+     * sets divisions when the country combobox is selected
+     */
+    public void customerCountrySelected() throws SQLException {
         setDivisions((String) customerCountryComboBox.getValue());
     }
+    /**
+     * @param countryName - sets divisions of countryName variable and puts them in a combobox
+     */
     public void setDivisions(String countryName) throws SQLException {
         int countryId = CountryQuery.getCountryId(countryName);
         ObservableList allDivisions = DivisionQuery.getAllDivisionsFromCountry(countryId);
@@ -105,6 +119,9 @@ public class CustomerController implements Initializable {
         customerDivisionComboBox.setPromptText("");
         customerDivisionComboBox.setDisable(false);
     }
+    /**
+     * @param actionEvent loads the main window
+     */
     public void loadAppointments(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();

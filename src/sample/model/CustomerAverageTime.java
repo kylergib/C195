@@ -1,5 +1,8 @@
 package sample.model;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class CustomerAverageTime {
     private int customerId;
     private long averageTime;

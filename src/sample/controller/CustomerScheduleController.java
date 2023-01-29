@@ -1,5 +1,5 @@
 package sample.controller;
-//cleaned
+
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +21,10 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class CustomerScheduleController implements Initializable {
     public static Customer currentCustomer;
     public TableView appointmentTable;
@@ -53,6 +56,9 @@ public class CustomerScheduleController implements Initializable {
             throw new RuntimeException(e);
         }
     }
+    /**
+     * @param actionEvent loads the main window and goes back ot it
+     */
     public void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
@@ -61,6 +67,9 @@ public class CustomerScheduleController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**
+     * @param appointmentList sets appointment schedule for a specific customer
+     */
     public void setAppointmentTable(ObservableList<Appointment> appointmentList) throws SQLException {
         appointmentTable.setItems(appointmentList);
         appointmentIDColumn.setCellValueFactory(new PropertyValueFactory<>("id"));

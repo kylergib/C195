@@ -26,7 +26,10 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Comparator;
 import java.util.ResourceBundle;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class ReportController implements Initializable {
 
     public TableView monthTypeTable;
@@ -88,6 +91,9 @@ public class ReportController implements Initializable {
         totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
     }
+    /**
+     * @param actionEvent loads the schedule window
+     */
     public void scheduleButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
@@ -96,9 +102,15 @@ public class ReportController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    /**
+     * exits out of the application on button click
+     */
     public void exitButtonClicked() {
         Platform.exit();
     }
+    /**
+     * fills the table with averages of customer appointment times
+     */
     public void setAverageTable() throws SQLException {
         ObservableList allCustomers = CustomerQuery.getAllCustomers();
         ObservableList allAverages = FXCollections.observableArrayList();

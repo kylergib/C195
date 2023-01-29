@@ -1,5 +1,8 @@
 package sample.model;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class Customer {
     private int customerId;
     private String customerName;

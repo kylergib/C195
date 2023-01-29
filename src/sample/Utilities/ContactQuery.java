@@ -1,12 +1,15 @@
 package sample.Utilities;
-//clean
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class ContactQuery {
     public static ObservableList<String> getAllContacts() throws SQLException {
         ObservableList<String> allContacts = FXCollections.observableArrayList();

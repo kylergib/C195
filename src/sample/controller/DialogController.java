@@ -1,5 +1,5 @@
 package sample.controller;
-//cleaned
+
 import javafx.event.ActionEvent;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -8,7 +8,10 @@ import javafx.stage.Stage;
 
 import java.net.URL;
 import java.util.ResourceBundle;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class DialogController  implements Initializable {
     public static String newLabelText;
     public static boolean confirmVar;

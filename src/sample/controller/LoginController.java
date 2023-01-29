@@ -22,7 +22,10 @@ import java.util.ResourceBundle;
 
 import static sample.Main.rb;
 import static sample.Main.myUser;
-//cleaned
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class LoginController implements Initializable {
     public Label titleLabel;
     public TextField userNameTextField;
@@ -39,11 +42,15 @@ public class LoginController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getCurrentTimeZone();
     }
-
+    /**
+     * gets current time zone
+     */
     public void getCurrentTimeZone() {
         currentTimeZoneLabel.setText(String.valueOf(ZoneId.systemDefault()));
     }
-
+    /**
+     * @param actionEvent tries to login to the application and load the schedule window
+     */
     public void loginButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
         myUser = UserQuery.select(userNameTextField.getText(),passwordTextField.getText());
         Timestamp currentTime = new Timestamp(System.currentTimeMillis());
@@ -67,24 +74,36 @@ public class LoginController implements Initializable {
             + " - " +currentTime);
         }
     }
-    public void languageToEnglishButtonClicked(ActionEvent actionEvent) {
+    /**
+     * changes language of labels on login page if you select the English button
+     */
+    public void languageToEnglishButtonClicked() {
         languageToFrenchButton.setDisable(false);
         languageToEnglishButton.setDisable(true);
         rb = ResourceBundle.getBundle("sample/Lang",Locale.ENGLISH);
         setLanguage();
     }
-    public void languageToFrenchButtonClicked(ActionEvent actionEvent) {
+    /**
+     * changes language of labels on login page if you select the French button
+     */
+    public void languageToFrenchButtonClicked() {
         languageToFrenchButton.setDisable(true);
         languageToEnglishButton.setDisable(false);
         rb = ResourceBundle.getBundle("sample/Lang",Locale.FRENCH);
         setLanguage();
     }
+    /**
+     * changes labels based off of resourcebundle var that is retrieved from your system.
+     */
     public void setLanguage() {
         loginButton.setText(rb.getString("login"));
         titleLabel.setText(rb.getString("pleaseLogin"));
         timezoneLabel.setText(rb.getString("timezone"));
         loginErrorLabel.setText("");
     }
+    /**
+     * @param textToWrite logs login attempts in a file
+     */
     public void writeLoginActivity(String textToWrite) throws IOException {
         String filename = "login_activity.txt";
         FileWriter fwriter = new FileWriter(filename, true);

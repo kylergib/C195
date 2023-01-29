@@ -1,12 +1,15 @@
 package sample.Utilities;
-//clean
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import sample.Main;
 import sample.model.Customer;
 
 import java.sql.*;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class CustomerQuery {
 
     public static ObservableList<Customer> getAllCustomers() throws SQLException {

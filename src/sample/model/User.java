@@ -1,5 +1,8 @@
 package sample.model;
-
+/**
+ *
+ * @author Kyle Gibson
+ */
 public class User {
     private String userName;
     private int userId;
