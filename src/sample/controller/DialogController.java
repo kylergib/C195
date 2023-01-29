@@ -33,7 +33,9 @@ public class DialogController  implements Initializable {
         }
     }
     /**
-     * @param actionEvent the button click is pressed and triggers a confirmation in the dialog
+     * the button click is pressed and triggers a confirmation in the dialog
+     * @param actionEvent event from pushing the button
+     *
      */
     public void dialogConfirmButtonClicked(ActionEvent actionEvent) {
         confirmVar = true;
@@ -41,7 +43,8 @@ public class DialogController  implements Initializable {
         stage.close();
     }
     /**
-     * @param actionEvent the button click is pressed and triggers a cancel in the dialog
+     * the button click is pressed and triggers a cancel in the dialog
+     * @param actionEvent event from pushing the button
      */
     public void dialogCancelButtonClicked(ActionEvent actionEvent) {
         confirmVar = false;

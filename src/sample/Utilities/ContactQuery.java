@@ -10,6 +10,9 @@ import java.sql.SQLException;
  *
  * @author Kyle Gibson
  */
+/**
+ * Class to query the contact table in database
+ */
 public class ContactQuery {
     /**
      * @return list of all contacts

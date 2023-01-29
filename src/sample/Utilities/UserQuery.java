@@ -9,6 +9,9 @@ import java.sql.SQLException;
  *
  * @author Kyle Gibson
  */
+/**
+ * Class to query the user table in database
+ */
 public abstract class UserQuery {
     /**
      * @return user from database

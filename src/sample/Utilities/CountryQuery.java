@@ -10,6 +10,9 @@ import java.sql.SQLException;
  *
  * @author Kyle Gibson
  */
+/**
+ * Class to query the country table in database
+ */
 public class CountryQuery {
     /**
      * @return id of a specific country

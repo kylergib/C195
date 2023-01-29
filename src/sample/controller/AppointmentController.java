@@ -128,7 +128,8 @@ public class AppointmentController implements Initializable {
         }
     }
     /**
-     * @param actionEvent save appointment when clicking the button
+     * save appointment when clicking the button
+     * @param actionEvent event from pushing the button
      */
     public void appointmentSaveClicked(ActionEvent actionEvent) throws SQLException, IOException {
         String contact = (String) appointmentContact.getValue();
@@ -259,7 +260,8 @@ public class AppointmentController implements Initializable {
             appointmentCancelClicked(actionEvent);
     }
     /**
-     * @param actionEvent cancels out of window and returns to main window
+     * cancels out of window and returns to main window
+     * @param actionEvent event from pushing the button
      */
     public void appointmentCancelClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));

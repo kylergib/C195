@@ -10,6 +10,9 @@ import java.sql.*;
  *
  * @author Kyle Gibson
  */
+/**
+ * Class to query the customer table in database
+ */
 public class CustomerQuery {
     /**
      * @return list of all customers

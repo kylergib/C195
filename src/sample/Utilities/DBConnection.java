@@ -6,6 +6,9 @@ import java.sql.DriverManager;
  *
  * @author Kyle Gibson
  */
+/**
+ * Class to manage the database connection
+ */
 public abstract class DBConnection {
 
 

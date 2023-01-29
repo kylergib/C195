@@ -52,7 +52,8 @@ public class LoginController implements Initializable {
         currentTimeZoneLabel.setText(String.valueOf(ZoneId.systemDefault()));
     }
     /**
-     * @param actionEvent tries to login to the application and load the schedule window
+     * tries to log in to the application and load the schedule window
+     * @param actionEvent event from pushing the button
      */
     public void loginButtonClicked(ActionEvent actionEvent) throws SQLException, IOException {
         myUser = UserQuery.select(userNameTextField.getText(),passwordTextField.getText());
@@ -105,7 +106,8 @@ public class LoginController implements Initializable {
         loginErrorLabel.setText("");
     }
     /**
-     * @param textToWrite logs login attempts in a file
+     * logs login attempts in a file
+     * @param textToWrite string that will be written to file
      */
     public void writeLoginActivity(String textToWrite) throws IOException {
         String filename = "login_activity.txt";

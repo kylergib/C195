@@ -17,6 +17,9 @@ import java.time.YearMonth;
  *
  * @author Kyle Gibson
  */
+/**
+ * Class to query the appointment table in database
+ */
 public abstract class AppointmentQuery {
 
     /**

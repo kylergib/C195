@@ -9,6 +9,9 @@ import java.sql.SQLException;
  *
  * @author Kyle Gibson
  */
+/**
+ * Class to query the division table in database
+ */
 public class DivisionQuery {
     /**
      * @return division name

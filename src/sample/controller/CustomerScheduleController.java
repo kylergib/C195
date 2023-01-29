@@ -60,7 +60,8 @@ public class CustomerScheduleController implements Initializable {
         }
     }
     /**
-     * @param actionEvent loads the main window and goes back ot it
+     * loads the main window and goes back ot it
+     * @param actionEvent event from pushing the button
      */
     public void backButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
@@ -71,7 +72,8 @@ public class CustomerScheduleController implements Initializable {
         stage.show();
     }
     /**
-     * @param appointmentList sets appointment schedule for a specific customer
+     * sets appointment schedule for a specific customer
+     * @param appointmentList list of appointment objects
      */
     public void setAppointmentTable(ObservableList<Appointment> appointmentList) throws SQLException {
         appointmentTable.setItems(appointmentList);

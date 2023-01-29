@@ -110,7 +110,8 @@ public class ScheduleController implements Initializable {
         stage.showAndWait();
     }
     /**
-     * @param customerList sets the customer table with customer information
+     * sets the customer table with information from customerList
+     * @param customerList list of customers
      */
     public void setCustomerTable(ObservableList customerList) {
         customerTable.setItems(customerList);
@@ -121,13 +122,15 @@ public class ScheduleController implements Initializable {
         customerPhoneColumn.setCellValueFactory(new PropertyValueFactory<>("phoneNumber"));
     }
     /**
-     * @param actionEvent loads window to add a new customer
+     * loads window to add a new customer
+     * @param actionEvent event from pushing the button
      */
     public void addCustomerClicked(ActionEvent actionEvent) throws IOException {
         loadCustomerWindow(actionEvent, "Add Customer");
     }
     /**
-     * @param actionEvent loads a window to modify a customer record
+     * loads a window to modify a customer record
+     * @param actionEvent event from pushing button
      */
     public void modifyCustomerClicked(ActionEvent actionEvent) throws IOException {
         Customer selectedCustomer = getCustomerSelected();
@@ -157,7 +160,8 @@ public class ScheduleController implements Initializable {
         }
     }
     /**
-     * @param actionEvent loads a customer window
+     * loads a customer window
+     * @param actionEvent event from pushing the button
      */
     public void loadCustomerWindow(ActionEvent actionEvent, String windowTitle) throws IOException {
         CustomerController.customerTitleVar = windowTitle;
@@ -179,13 +183,15 @@ public class ScheduleController implements Initializable {
         return null;
     }
     /**
-     * @param actionEvent loads a window to add an appointment
+     * loads a window to add an appointment
+     * @param actionEvent event from pushing the button
      */
     public void addAppointmentClicked(ActionEvent actionEvent) throws IOException {
         loadAppointmentWindow(actionEvent, "Add Appointment");
     }
     /**
-     * @param actionEvent loads a window to modify an existing appointment
+     * loads a window to modify an existing appointment
+     * @param actionEvent event from pushing the button
      */
     public void modifyAppointmentClicked(ActionEvent actionEvent) throws IOException {
         Appointment selectedAppointment = getAppointmentSelected();
@@ -220,7 +226,8 @@ public class ScheduleController implements Initializable {
         return null;
     }
     /**
-     * @param actionEvent loads a window to add or modify an appointment
+     * loads a window to add or modify an appointment
+     * @param actionEvent event from pushing the button
      */
     public void loadAppointmentWindow(ActionEvent actionEvent, String windowTitle) throws IOException {
         AppointmentController.appointmentTitleVar = windowTitle;
@@ -259,7 +266,8 @@ public class ScheduleController implements Initializable {
         setAppointmentTable(weekAppointments);
     }
     /**
-     * @param appointmentList fills the appointment table with data from appointmentList
+     * fills the appointment table with data from appointmentList
+     * @param appointmentList list of appointment objects
      */
     public void setAppointmentTable(ObservableList<Appointment> appointmentList) throws SQLException {
         appointmentTable.setItems(appointmentList);
@@ -281,7 +289,8 @@ public class ScheduleController implements Initializable {
         Platform.exit();
     }
     /**
-     * @param actionEvent loads the reports window
+     * loads the reports window
+     * @param actionEvent event from pushing the button
      */
     public void reportsButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/reports.fxml"));
@@ -292,7 +301,8 @@ public class ScheduleController implements Initializable {
         stage.show();
     }
     /**
-     * @param actionEvent attempts to load selected customers table if one is selected
+     * attempts to load selected customers table if one is selected
+     * @param actionEvent event from pushing the button
      */
     public void customerScheduleClicked(ActionEvent actionEvent) throws IOException {
         Customer selectedCustomer = getCustomerSelected();
@@ -304,7 +314,8 @@ public class ScheduleController implements Initializable {
         loadCustomerSchedule(actionEvent);
     }
     /**
-     * @param actionEvent loads the selected customer's schedule
+     * loads the selected customer's schedule
+     * @param actionEvent event from pushing the button
      */
     public void loadCustomerSchedule(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/customerSchedule.fxml"));

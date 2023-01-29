@@ -70,7 +70,8 @@ public class CustomerController implements Initializable {
         }
     }
     /**
-     * @param actionEvent saves customer when button is clicked
+     * saves customer when button is clicked
+     * @param actionEvent event from pushing the button
      */
     public void saveCustomerClicked(ActionEvent actionEvent) throws SQLException, IOException {
         String customerCountry = (String) customerCountryComboBox.getValue();
@@ -101,7 +102,8 @@ public class CustomerController implements Initializable {
         }
     }
     /**
-     * @param actionEvent cancels saving the customer and returns to main window when button is clicked
+     * cancels saving the customer and returns to main window when button is clicked
+     * @param actionEvent event from pushing the button
      */
     public void cancelCustomerClicked(ActionEvent actionEvent) throws IOException {
         loadAppointments(actionEvent);
@@ -113,7 +115,8 @@ public class CustomerController implements Initializable {
         setDivisions((String) customerCountryComboBox.getValue());
     }
     /**
-     * @param countryName - sets divisions of countryName variable and puts them in a combobox
+     * sets divisions of countryName variable and puts them in a combobox
+     * @param countryName name of a country
      */
     public void setDivisions(String countryName) throws SQLException {
         int countryId = CountryQuery.getCountryId(countryName);
@@ -123,7 +126,8 @@ public class CustomerController implements Initializable {
         customerDivisionComboBox.setDisable(false);
     }
     /**
-     * @param actionEvent loads the main window
+     * loads the main window
+     * @param actionEvent event from pushing the button
      */
     public void loadAppointments(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));

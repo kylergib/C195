@@ -95,7 +95,8 @@ public class ReportController implements Initializable {
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
     }
     /**
-     * @param actionEvent loads the schedule window
+     * loads the schedule window
+     * @param actionEvent event from pushing the button
      */
     public void scheduleButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
