@@ -10,7 +10,9 @@ import sample.Utilities.*;
 import sample.model.User;
 import java.util.Locale;
 import java.util.ResourceBundle;
-
+/**
+ * JavaDocs folder is located in JavaII/JavaDocs/
+ */
 public class Main extends Application {
     public static ResourceBundle rb = ResourceBundle.getBundle("sample/Lang",Locale.getDefault());
     public static User myUser;
