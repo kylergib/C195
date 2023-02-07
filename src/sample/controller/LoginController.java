@@ -44,6 +44,7 @@ public class LoginController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         getCurrentTimeZone();
+        setLanguage();
     }
     /**
      * gets current time zone
@@ -104,6 +105,10 @@ public class LoginController implements Initializable {
         titleLabel.setText(rb.getString("pleaseLogin"));
         timezoneLabel.setText(rb.getString("timezone"));
         loginErrorLabel.setText("");
+        if (rb.getLocale() == Locale.FRENCH) {
+            languageToFrenchButton.setDisable(true);
+            languageToEnglishButton.setDisable(false);
+        }
     }
     /**
      * logs login attempts in a file
