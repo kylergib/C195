@@ -14,6 +14,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Utilities.AppointmentQuery;
+import sample.model.Contact;
 import sample.model.Customer;
 import sample.model.Appointment;
 
@@ -29,7 +30,7 @@ import java.util.ResourceBundle;
  * a class that loads a window to view a customers schedule
  */
 public class CustomerScheduleController implements Initializable {
-    public static Customer currentCustomer;
+    public static Contact currentCustomer;
     public TableView appointmentTable;
     public TableColumn appointmentIDColumn;
     public TableColumn titleColumn;
@@ -46,10 +47,10 @@ public class CustomerScheduleController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        customerNameLabel.setText(currentCustomer.getCustomerName());
+        customerNameLabel.setText(currentCustomer.getContactName());
         ObservableList<Appointment> allAppointments = null;
         try {
-            allAppointments = AppointmentQuery.getAllCustomerAppointments(currentCustomer.getCustomerId());
+            allAppointments = AppointmentQuery.getAllContactAppointments(currentCustomer.getContactId());
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -64,9 +65,9 @@ public class CustomerScheduleController implements Initializable {
      * @param actionEvent event from pushing the button
      */
     public void backButtonClicked(ActionEvent actionEvent) throws IOException {
-        Parent root = FXMLLoader.load(getClass().getResource("/schedule.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 1640, 600);
+        Scene scene = new Scene(root, 1000, 600);
         stage.setTitle("Scheduler");
         stage.setScene(scene);
         stage.show();
@@ -86,6 +87,6 @@ public class CustomerScheduleController implements Initializable {
         startTimeColumn.setCellValueFactory(new PropertyValueFactory<>("start"));
         endTimeColumn.setCellValueFactory(new PropertyValueFactory<>("end"));
         appointmentTableCustomerIdColumn.setCellValueFactory(new PropertyValueFactory<>("customerId"));
-        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
+//        userIdColumn.setCellValueFactory(new PropertyValueFactory<>("userId"));
     }
 }

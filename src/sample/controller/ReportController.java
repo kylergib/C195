@@ -9,17 +9,17 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import sample.Utilities.AppointmentQuery;
+import sample.Utilities.ContactQuery;
 import sample.Utilities.CustomerQuery;
 import sample.Utilities.GetAverageTime;
-import sample.model.Appointment;
-import sample.model.Customer;
-import sample.model.CustomerAverageTime;
-import sample.model.ReportType;
+import sample.model.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -44,6 +44,13 @@ public class ReportController implements Initializable {
     public TableColumn averageCustomerId;
     public TableColumn averageTime;
     public TableColumn averageAppointments;
+    public Button scheduleButton;
+    public Button exitButton;
+    public Button viewContactSchedule;
+    public TableColumn contactNameColumn;
+    public TableColumn contactIdColumn;
+    public TableView contactTable;
+    public Label errorLabel;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -93,6 +100,13 @@ public class ReportController implements Initializable {
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
         totalColumn.setCellValueFactory(new PropertyValueFactory<>("total"));
         yearColumn.setCellValueFactory(new PropertyValueFactory<>("year"));
+
+
+        try {
+            setContactTable();
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
     }
     /**
      * loads the schedule window
@@ -142,5 +156,50 @@ public class ReportController implements Initializable {
         averageCustomerId.setCellValueFactory(new PropertyValueFactory<>("customerId"));
         averageTime.setCellValueFactory(new PropertyValueFactory<>("averageTime"));
         averageAppointments.setCellValueFactory(new PropertyValueFactory<>("numberOfAppointments"));
+    }
+
+
+
+    public void setContactTable() throws SQLException {
+        ObservableList<Contact> allContacts = ContactQuery.getAllContactsObject();
+
+        contactTable.setItems(allContacts);
+        contactIdColumn.setCellValueFactory(new PropertyValueFactory<>("contactId"));
+        contactNameColumn.setCellValueFactory(new PropertyValueFactory<>("contactName"));
+
+
+    }
+
+    /**
+     * attempts to load selected contacts table if one is selected
+     * @param actionEvent event from pushing the button
+     */
+    public void viewContactScheduleClicked(ActionEvent actionEvent) throws IOException {
+        Contact selectedContact = getContactSelected();
+        if (selectedContact == null) {
+            errorLabel.setText("No customer is selected");
+            return;
+        }
+        CustomerScheduleController.currentCustomer = selectedContact;
+        loadCustomerSchedule(actionEvent);
+    }
+    /**
+     * loads the selected customer's schedule
+     * @param actionEvent event from pushing the button
+     */
+    public void loadCustomerSchedule(ActionEvent actionEvent) throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("/customerSchedule.fxml"));
+        Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
+        Scene scene = new Scene(root, 977, 506);
+        stage.setTitle("Scheduler");
+        stage.setScene(scene);
+        stage.show();
+    }
+    public Contact getContactSelected() {
+        if (contactTable.getSelectionModel().getSelectedItem() != null) {
+            Contact selectedContact = (Contact) contactTable.getSelectionModel().getSelectedItem();
+            return selectedContact;
+        }
+        return null;
     }
 }

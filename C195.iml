@@ -21,6 +21,14 @@
         <jarDirectory url="file://$PATH_TO_FX$" recursive="false" />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="mysql-connector-java-8.0.25" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../Jar/mysql-connector-j-8.0.32/mysql-connector-j-8.0.32.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>

@@ -2,6 +2,7 @@ package sample.Utilities;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import sample.model.Contact;
 
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -26,6 +27,20 @@ public class ContactQuery {
         while(rs.next()) {
             String contactName = rs.getString("Contact_Name");
             allContacts.add(contactName);
+        }
+        return allContacts;
+    }
+    public static ObservableList<Contact> getAllContactsObject() throws SQLException {
+        ObservableList<Contact> allContacts = FXCollections.observableArrayList();
+        String sql = "SELECT * FROM CONTACTS";
+        PreparedStatement ps = DBConnection.connection.prepareStatement(sql);
+        ResultSet rs = ps.executeQuery();
+        System.out.println("1");
+        while(rs.next()) {
+            String contactName = rs.getString("Contact_Name");
+            int contactId = rs.getInt("Contact_ID");
+            Contact newContact = new Contact(contactId,contactName);
+            allContacts.add(newContact);
         }
         return allContacts;
     }

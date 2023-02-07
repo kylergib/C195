@@ -6,9 +6,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="670.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ReportController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.ReportController">
    <children>
-      <TableView fx:id="monthTypeTable" layoutX="14.0" layoutY="77.0" prefHeight="472.0" prefWidth="310.0">
+      <TableView fx:id="monthTypeTable" layoutX="669.0" layoutY="77.0" prefHeight="472.0" prefWidth="310.0">
         <columns>
           <TableColumn fx:id="monthColumn" prefWidth="46.0" text="Month" />
             <TableColumn fx:id="yearColumn" prefWidth="75.0" text="Year" />
@@ -16,16 +16,25 @@
             <TableColumn fx:id="totalColumn" prefWidth="46.0" text="Total" />
         </columns>
       </TableView>
-      <Label alignment="TOP_CENTER" layoutX="27.0" layoutY="52.0" prefHeight="18.0" prefWidth="284.0" text="Total number of appointments by type and month" textAlignment="CENTER" wrapText="true" />
-      <Button fx:id="scheduleButton" layoutX="533.0" layoutY="561.0" mnemonicParsing="false" onAction="#scheduleButtonClicked" text="Schedule" />
-      <Button fx:id="exitButton" layoutX="616.0" layoutY="561.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
-      <TableView fx:id="customerAverageTable" layoutX="354.0" layoutY="77.0" prefHeight="472.0" prefWidth="300.0">
+      <Label alignment="TOP_CENTER" layoutX="682.0" layoutY="52.0" prefHeight="18.0" prefWidth="284.0" text="Total number of appointments by type and month" textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="scheduleButton" layoutX="884.0" layoutY="561.0" mnemonicParsing="false" onAction="#scheduleButtonClicked" text="Back" />
+      <Button fx:id="exitButton" layoutX="941.0" layoutY="561.0" mnemonicParsing="false" onAction="#exitButtonClicked" text="Exit" />
+      <TableView fx:id="customerAverageTable" layoutX="350.0" layoutY="76.0" prefHeight="472.0" prefWidth="300.0">
         <columns>
           <TableColumn fx:id="averageCustomerId" prefWidth="75.0" text="Customer ID" />
           <TableColumn fx:id="averageTime" prefWidth="139.0" text="Average Time (Minutes)" />
             <TableColumn fx:id="averageAppointments" prefWidth="83.0" text="Appointments" />
         </columns>
       </TableView>
-      <Label layoutX="380.0" layoutY="53.0" text="Average time each customer's appointment is" />
+      <Label layoutX="376.0" layoutY="52.0" text="Average time each customer's appointment is" />
+      <TableView fx:id="contactTable" layoutX="27.0" layoutY="77.0" prefHeight="472.0" prefWidth="300.0">
+        <columns>
+          <TableColumn fx:id="contactNameColumn" prefWidth="149.0" text="Contact Name" />
+          <TableColumn fx:id="contactIdColumn" prefWidth="149.0" text="Contact ID" />
+        </columns>
+      </TableView>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="44.0" layoutY="33.0" prefHeight="38.0" prefWidth="266.0" text="List of all contacts. Select a contact and click view schedule to view their schedule." textAlignment="CENTER" wrapText="true" />
+      <Button fx:id="viewContactSchedule" layoutX="228.0" layoutY="561.0" mnemonicParsing="false" onAction="#viewContactScheduleClicked" text="View Schedule" />
+      <Label fx:id="errorLabel" layoutX="29.0" layoutY="565.0" prefHeight="17.0" prefWidth="188.0" />
    </children>
 </AnchorPane>

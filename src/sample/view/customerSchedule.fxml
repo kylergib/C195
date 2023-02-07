@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="977.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CustomerScheduleController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="506.0" prefWidth="977.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.CustomerScheduleController">
    <children>
       <TableView fx:id="appointmentTable" fixedCellSize="0.0" layoutX="14.0" layoutY="94.0" prefHeight="362.0" prefWidth="943.0">
         <columns>
@@ -20,7 +20,6 @@
             <TableColumn fx:id="startTimeColumn" prefWidth="150.0" text="Start Time" />
             <TableColumn fx:id="endTimeColumn" prefWidth="150.0" text="End Time" />
             <TableColumn fx:id="appointmentTableCustomerIdColumn" text="Customer ID" />
-            <TableColumn fx:id="userIdColumn" minWidth="7.0" text="User ID" />
         </columns>
       </TableView>
       <Label fx:id="customerNameLabel" layoutX="386.0" layoutY="28.0" text="Customer Name" underline="true">

@@ -242,17 +242,21 @@ public class AppointmentController implements Initializable {
                     return;
                 }
             }
+            String customerName = customerNameCombo.getSelectionModel().getSelectedItem().toString();
+
+            int customerId = CustomerQuery.getCustomerId(customerName);
+            System.out.println("COMBO BOX SELECTED: " + customerNameCombo.getSelectionModel().getSelectedItem().toString());
             if (appointmentTitleVar == "Add Appointment") {
                 Appointment newAppointment = new Appointment(AppointmentQuery.getAllAppointments().size()+1,
                         title,description,location,appointmentTypeNew,appointmentStart,appointmentEnd,
-                        customerNameCombo.getSelectionModel().getSelectedIndex()+1, Main.myUser.getUserId(),
+                        customerId, Main.myUser.getUserId(),
                         appointmentContact.getSelectionModel().getSelectedIndex()+1);
                 int rowsAffected = AppointmentQuery.insert(newAppointment);
                 System.out.println(rowsAffected);
             } else if (appointmentTitleVar == "Modify Appointment") {
                 Appointment newAppointment = new Appointment(currentAppointment.getId(),
                         title,description,location,appointmentTypeNew,appointmentStart,appointmentEnd,
-                        customerNameCombo.getSelectionModel().getSelectedIndex()+1, Main.myUser.getUserId(),
+                        customerId, Main.myUser.getUserId(),
                         appointmentContact.getSelectionModel().getSelectedIndex()+1);
                 int rowsAffected = AppointmentQuery.update(newAppointment);
                 System.out.println(rowsAffected);

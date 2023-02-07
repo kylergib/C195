@@ -52,7 +52,6 @@ public class ScheduleController implements Initializable {
     public TableColumn customerAddressColumn;
     public TableColumn customerPostalCodeColumn;
     public TableColumn customerPhoneColumn;
-    public TableColumn customerDivisionId;
     public Button addCustomer;
     public Button modifyCustomer;
     public Button deleteCustomer;
@@ -295,7 +294,7 @@ public class ScheduleController implements Initializable {
     public void reportsButtonClicked(ActionEvent actionEvent) throws IOException {
         Parent root = FXMLLoader.load(getClass().getResource("/reports.fxml"));
         Stage stage = (Stage)((Node)actionEvent.getSource()).getScene().getWindow();
-        Scene scene = new Scene(root, 670, 600);
+        Scene scene = new Scene(root, 1000, 600);
         stage.setTitle("Scheduler");
         stage.setScene(scene);
         stage.show();
@@ -304,15 +303,15 @@ public class ScheduleController implements Initializable {
      * attempts to load selected customers table if one is selected
      * @param actionEvent event from pushing the button
      */
-    public void customerScheduleClicked(ActionEvent actionEvent) throws IOException {
-        Customer selectedCustomer = getCustomerSelected();
-        if (selectedCustomer == null) {
-            errorLabel.setText("No customer is selected");
-            return;
-        }
-        CustomerScheduleController.currentCustomer = selectedCustomer;
-        loadCustomerSchedule(actionEvent);
-    }
+//    public void customerScheduleClicked(ActionEvent actionEvent) throws IOException {
+//        Customer selectedCustomer = getCustomerSelected();
+//        if (selectedCustomer == null) {
+//            errorLabel.setText("No customer is selected");
+//            return;
+//        }
+//        CustomerScheduleController.currentCustomer = selectedCustomer;
+//        loadCustomerSchedule(actionEvent);
+//    }
     /**
      * loads the selected customer's schedule
      * @param actionEvent event from pushing the button
