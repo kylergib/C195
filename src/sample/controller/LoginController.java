@@ -105,7 +105,7 @@ public class LoginController implements Initializable {
         titleLabel.setText(rb.getString("pleaseLogin"));
         timezoneLabel.setText(rb.getString("timezone"));
         loginErrorLabel.setText("");
-        if (rb.getLocale() == Locale.FRENCH) {
+        if (rb.getLocale() != Locale.ENGLISH) {
             languageToFrenchButton.setDisable(true);
             languageToEnglishButton.setDisable(false);
         }

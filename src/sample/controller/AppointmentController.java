@@ -23,6 +23,9 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 /**
  *
@@ -220,20 +223,27 @@ public class AppointmentController implements Initializable {
             return;
 
         }
+        ZoneId estZone = ZoneId.of("America/New_York");
+//        ZonedDateTime appointmentStartEST = appointmentStart.toLocalDateTime().atZone(estZone);
+        LocalDateTime appointmentStartEST = appointmentStart.toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(estZone).toLocalDateTime();
+
+        LocalDateTime appointmentEndEST = appointmentEnd.toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(estZone).toLocalDateTime();
+        System.out.println(appointmentStart + " - " + appointmentStartEST);
+
             if (appointmentStart.compareTo(appointmentEnd) >= 0) {
                 errorLabel.setText("End time is before start time");
                 return;
             } else {
                 errorLabel.setText("");
             }
-            if (appointmentStart.toLocalDateTime().getHour() < 8 || appointmentStart.toLocalDateTime().getHour() > 21) {
-                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00)");
+            if (appointmentStartEST.getHour() < 8 || appointmentStartEST.getHour() > 21) {
+                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00) EST");
                 return;
-            } else if (appointmentEnd.toLocalDateTime().getHour() < 8 || appointmentEnd.toLocalDateTime().getHour() > 22) {
-                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00)");
+            } else if (appointmentEndEST.getHour() < 8 || appointmentEndEST.getHour() > 22) {
+                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00) EST");
                 return;
-            } else if (appointmentEnd.toLocalDateTime().getHour() == 22 && appointmentEnd.toLocalDateTime().getMinute() > 0) {
-                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00)");
+            } else if (appointmentEndEST.getHour() == 22 && appointmentEndEST.getMinute() > 0) {
+                errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00) EST");
                 return;
             } else if (AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentStart) ||
                     AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentEnd)) {
