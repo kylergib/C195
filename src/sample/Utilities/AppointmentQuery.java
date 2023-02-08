@@ -228,11 +228,13 @@ public abstract class AppointmentQuery {
         while(rs.next()) {
             Timestamp start = rs.getTimestamp("Start");
             Timestamp end = rs.getTimestamp("End");
-            if (appointmentTime.before(end) && appointmentTime.after(start)) {
+            if (appointmentTime.equals(start) || appointmentTime.equals(end)) {
+                return true;
+            } else if (appointmentTime.before(end) && appointmentTime.after(start)) {
                 System.out.println("BETWEEN");
                 return true;
             }
-        }
+    }
         return false;
     }
 

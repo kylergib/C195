@@ -25,7 +25,6 @@ import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.time.ZonedDateTime;
 import java.util.ResourceBundle;
 /**
  *
@@ -146,6 +145,7 @@ public class AppointmentController implements Initializable {
         String startCombo = (String) appointmentStartCombo.getValue();
         String endCombo = (String) appointmentEndCombo.getValue();
         String appointmentTypeNew = appointmentType.getText();
+        int customerId = CustomerQuery.getCustomerId(name);
         if (contact == null) {
             errorLabel.setText("Contact field cannot be blank");
             return;
@@ -224,7 +224,7 @@ public class AppointmentController implements Initializable {
 
         }
         ZoneId estZone = ZoneId.of("America/New_York");
-//        ZonedDateTime appointmentStartEST = appointmentStart.toLocalDateTime().atZone(estZone);
+
         LocalDateTime appointmentStartEST = appointmentStart.toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(estZone).toLocalDateTime();
 
         LocalDateTime appointmentEndEST = appointmentEnd.toLocalDateTime().atZone(ZoneId.systemDefault()).withZoneSameInstant(estZone).toLocalDateTime();
@@ -245,16 +245,13 @@ public class AppointmentController implements Initializable {
             } else if (appointmentEndEST.getHour() == 22 && appointmentEndEST.getMinute() > 0) {
                 errorLabel.setText("Appointment has to be within store hours. 8:00 AM and 10:00 PM (22:00) EST");
                 return;
-            } else if (AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentStart) ||
-                    AppointmentQuery.checkConflictingAppointments(customerNameCombo.getSelectionModel().getSelectedIndex()+1,appointmentEnd)) {
-                if (appointmentTitleVar == "Add Appointment") {
+            } else if (AppointmentQuery.checkConflictingAppointments(customerId,appointmentStart) ||
+                    AppointmentQuery.checkConflictingAppointments(customerId,appointmentEnd))
+            {
                     errorLabel.setText("Customer already has an appointment between this time.");
                     return;
-                }
             }
-            String customerName = customerNameCombo.getSelectionModel().getSelectedItem().toString();
 
-            int customerId = CustomerQuery.getCustomerId(customerName);
             System.out.println("COMBO BOX SELECTED: " + customerNameCombo.getSelectionModel().getSelectedItem().toString());
             if (appointmentTitleVar == "Add Appointment") {
                 Appointment newAppointment = new Appointment(AppointmentQuery.getAllAppointments().size()+1,
